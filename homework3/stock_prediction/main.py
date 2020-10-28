@@ -6,6 +6,7 @@ import torch.optim as optim
 class Neuron(nn.Module):
 
     def __init__(self):
+        super().__init__()
         self.neuron = nn.Linear(4, 1)
 
     def forward(self, x):
@@ -37,19 +38,25 @@ if __name__ == '__main__':
 
     criterion = nn.MSELoss()
     neuron = Neuron()
-    optimizer = optim.AdamW(neuron.parameters(), lr=0.0001)
+    optimizer = optim.AdamW(neuron.parameters(), lr=0.00005)
 
     print("[INFO] Start Training")
-    running_loss = 0.0
-    for epoch_idx in range(5):
+    for epoch_idx in range(310000):
         optimizer.zero_grad()
-        outputs = neuron(inputs)
+        outputs = torch.squeeze(neuron(inputs))
         loss = criterion(outputs, golden)
         loss.backward()
         optimizer.step()
-        running_loss += loss.item()
+        if epoch_idx % 10000 == 0:
+            print("[INFO] epoch: " + str(epoch_idx) + ", running_loss: " + str(loss.item()))
+
     print("[INFO] Finished Training")
 
     with torch.no_grad():
         outputs = neuron(inputs)
         print(outputs)
+
+    # the weight: [-0.2057, 0.5655, -0.5762, 1.0367]
+    # the bias: [10.8877]
+    # the loss: [0.6690]
+    # prediction: [[56.9727], [57.7346], [59.1079], [58.0597], [58.1401], [59.3105], [58.2607], [58.2722], [58.8808], [57.9936], [59.3860], [60.8952], [60.4690], [62.0344], [61.7871], [60.4591]]
