@@ -41,13 +41,13 @@ if __name__ == '__main__':
     optimizer = optim.AdamW(neuron.parameters(), lr=0.00005)
 
     print("[INFO] Start Training")
-    for epoch_idx in range(310000):
+    for epoch_idx in range(314000):
         optimizer.zero_grad()
         outputs = torch.squeeze(neuron(inputs))
         loss = criterion(outputs, golden)
         loss.backward()
         optimizer.step()
-        if epoch_idx % 10000 == 0:
+        if epoch_idx % 1000 == 0:
             print("[INFO] epoch: " + str(epoch_idx) + ", running_loss: " + str(loss.item()))
 
     print("[INFO] Finished Training")
