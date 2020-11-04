@@ -76,3 +76,6 @@ if __name__ == '__main__':
 
     X, Y = sample_generate()
     model = MultiLayerPerceptron()
+    for epoch_idx in range(args.num_epoch):
+        y_pred = model.forward(X)
+        print(y_pred)
