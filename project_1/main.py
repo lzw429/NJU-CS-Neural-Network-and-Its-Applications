@@ -1,7 +1,7 @@
 import numpy as np
 import argparse
 
-from homework4.func import ReLU
+from project_1.func import ReLU
 
 
 def target_func(x1, x2):
@@ -75,3 +75,4 @@ if __name__ == '__main__':
     n_in = args.input_size
 
     X, Y = sample_generate()
+    model = MultiLayerPerceptron()
