@@ -65,6 +65,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
+    parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--num_hidden_layer", type=int, default=3)
     parser.add_argument("--hidden_size", type=int, default=10)
     parser.add_argument("--num_iterate", type=int, default=10000)
@@ -76,6 +77,7 @@ if __name__ == '__main__':
 
     X, Y = sample_generate()
     model = MultiLayerPerceptron()
-    for epoch_idx in range(args.num_epoch):
-        y_pred = model.forward(X)
-        print(y_pred)
+    for epoch_idx in range(args.num_iterate):
+        for batch_idx in range(args.batch_size):
+            y_pred = model.forward(X)
+            print(y_pred)
