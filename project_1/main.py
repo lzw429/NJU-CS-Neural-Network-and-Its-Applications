@@ -4,7 +4,7 @@ import argparse
 from project_1.func import ReLU
 
 
-def target_func(x1, x2):
+def fitted_func(x1, x2):
     return np.sin(x1) - np.cos(x2)
 
 
@@ -16,7 +16,7 @@ def sample_generate():
     for i in x1:
         for j in x2:
             sample_inputs.append((i, j))
-            sample_golden.append(target_func(i, j))
+            sample_golden.append(fitted_func(i, j))
     return sample_inputs, sample_golden
 
 
