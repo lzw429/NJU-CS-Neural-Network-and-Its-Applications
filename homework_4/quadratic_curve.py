@@ -46,10 +46,13 @@ class Neuron(nn.Module):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_epoch", type=int, default=100000)
+    parser.add_argument("--num_epoch", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=0.00005)
+    parser.add_argument("--log_path", type=str,
+                        default="C:\\Users\\Dell\\Documents\\GitHub\\NJU-CS-Neural-Network-and-Its-Applications\\homework_4\\log.txt")
     args = parser.parse_args()
 
+    log_file = open(args.log_path, "w")
     neuron = Neuron()
     x = np.arange(-5, 5, 0.01)
     dataset = Dataset(x)
@@ -61,8 +64,11 @@ if __name__ == '__main__':
     plt.plot(x, dataset.golden, color='b')
     plt.show()
 
+    train_finished = False
     for epoch_idx in range(args.num_epoch):
         running_loss = 0.0
+        if train_finished == True:
+            break
         for batch_idx, sample_batched in enumerate(dataloader):
             inputs, golden = sample_batched
 
@@ -74,11 +80,20 @@ if __name__ == '__main__':
 
             # print statistics
             running_loss += loss.item()
-            print('[%d, %5d] loss: %.3f' % (epoch_idx + 1, batch_idx + 1, running_loss))
+            print('[%d, %5d] loss: %.3f' % (epoch_idx + 1, batch_idx + 1, running_loss), file=log_file)
+            if loss < 0.000001:
+                train_finished = True
+                break
             running_loss = 0.0
 
     print('[INFO] Finished Training')
 
     # draw the picture after training
-    plt.plot(x, torch.tensor(x, dtype=torch.float), color='r')
-    plt.show()
+    inputs_list = []
+    outputs_list = []
+    with torch.no_grad():
+        for batch_idx, sample_batched in enumerate(dataloader):
+            inputs, golden = sample_batched
+            outputs = neuron(inputs)
+    # plt.plot()
+    # plt.show()
