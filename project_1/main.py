@@ -75,7 +75,7 @@ if __name__ == '__main__':
     n_l = args.num_hidden_layer
     n_in = args.input_size
 
-    X, Y = sample_generate()
+    X, Y = sample_generate()  # the inputs and golden results
     model = MultiLayerPerceptron()
     for epoch_idx in range(args.num_iterate):
         for batch_idx in range(args.batch_size):
