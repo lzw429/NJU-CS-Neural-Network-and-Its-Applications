@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 
+from project_1.dataset import Dataset, DataLoader
 from project_1.func import ReLU
 
 
@@ -76,8 +77,12 @@ if __name__ == '__main__':
     n_in = args.input_size
 
     X, Y = sample_generate()  # the inputs and golden results
+    dataset = Dataset(X, Y)
+    dataloader = DataLoader(dataset, 64)
+
     model = MultiLayerPerceptron()
     for epoch_idx in range(args.num_iterate):
         for batch_idx in range(args.batch_size):
-            y_pred = model.forward(X)
-            print(y_pred)
+            sample_batch = dataloader.get_batch(batch_idx)
+            print(sample_batch)
+            # y_pred = model.forward()
