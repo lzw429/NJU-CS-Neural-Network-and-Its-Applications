@@ -2,7 +2,8 @@ import numpy as np
 import argparse
 
 from project_1.dataset import Dataset, DataLoader
-from project_1.func import ReLU
+from project_1.activate_func import ReLU
+from project_1.loss_func import Log_cosh
 
 
 def fitted_func(x1, x2):
@@ -24,16 +25,16 @@ def sample_generate():
 class MultiLayerPerceptron:
     def __init__(self):
         self.w_in = np.random.randn(n_h, n_in) * 0.01
-        self.b_in = np.zeros(shape=(n_h, 1))
+        self.b_in = np.zeros(shape=(n_h))
 
         self.w_h = []
         self.b_h = []
         for layer_idx in range(n_l):
             self.w_h.append(np.random.randn(n_h, n_h) * 0.01)
-            self.b_h.append(np.zeros(shape=(n_h, 1)))
+            self.b_h.append(np.zeros(shape=(n_h)))
 
         self.w_out = np.random.randn(1, n_h) * 0.01
-        self.b_out = np.zeros(shape=(1, 1))
+        self.b_out = np.zeros(shape=(1))
 
     def forward(self, X):
         """
@@ -42,21 +43,21 @@ class MultiLayerPerceptron:
         :return: the model output [n_batch, n_out]
         """
 
-        self.Z_in = np.array(X) * self.w_in.T + self.b_in  # (n_batch, n_h)
-        self.A_in = ReLU(self.Z_in)
+        self.Z_in = np.matmul(np.array(X), self.w_in.T) + self.b_in  # (n_batch, n_h)
+        self.A_in = ReLU(self.Z_in)  # (n_batch, n_h)
         self.A = self.A_in
 
         self.Z_h = []
         for layer_idx in range(n_l):  # for each layer
-            self.Z = np.dot(self.w_h[layer_idx], self.A) + self.b_h[layer_idx]
+            self.Z = np.matmul(self.A, self.w_h[layer_idx]) + self.b_h[layer_idx]  # (n_batch, n_h)
             self.Z_h.append(self.Z)
-            self.A = ReLU(self.Z)
-        self.Z = np.dot(self.w_out, self.A) + self.b_out
+            self.A = ReLU(self.Z)  # (n_batch, n_h)
+        self.Z = np.matmul(self.A, self.w_out.T) + self.b_out  # (n_batch, 1)
         self.A = ReLU(self.Z)
+        return np.squeeze(self.A)  # (n_batch)
 
     def loss(self, y_pred, Y):
-
-        pass
+        return Log_cosh(y_pred, Y)
 
     def back_prob(self):
         pass
@@ -92,4 +93,4 @@ if __name__ == '__main__':
         for batch_idx in range(n_batch):  # for each batch
             inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
             y_pred = model.forward(inputs)
-            print(y_pred)
+            local_loss = model.loss(y_pred, golden)
