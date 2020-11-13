@@ -25,7 +25,7 @@ class DataLoader:
             end = (batch_idx + 1) * batch_size
             self.batch_list.append((self.dataset.X[begin: end], self.dataset.Y[begin: end]))
 
-        if drop_last == False:
+        if not drop_last:
             begin = (len(dataset) // batch_size) * batch_size
             end = len(dataset)
             self.batch_list.append((self.dataset.X[begin:end], self.dataset.Y[begin:end]))

@@ -16,8 +16,8 @@ def sample_generate():
     sample_golden = []
     for i in x1:
         for j in x2:
-            sample_inputs.append((i, j))
-            sample_golden.append(fitted_func(i, j))
+            sample_inputs.append((i, j))  # the inputs: 2-d
+            sample_golden.append(fitted_func(i, j))  # the golden outputs: 1-d
     return sample_inputs, sample_golden
 
 
@@ -36,12 +36,18 @@ class MultiLayerPerceptron:
         self.b_out = np.zeros(shape=(1, 1))
 
     def forward(self, X):
-        self.Z_in = np.dot(self.w_in, X) + self.b_in
+        """
+        The forward propagation of this NN
+        :param X: the input tensor [n_batch, n_in]
+        :return: the model output [n_batch, n_out]
+        """
+
+        self.Z_in = np.array(X) * self.w_in.T + self.b_in  # (n_batch, n_h)
         self.A_in = ReLU(self.Z_in)
         self.A = self.A_in
 
         self.Z_h = []
-        for layer_idx in range(n_l):
+        for layer_idx in range(n_l):  # for each layer
             self.Z = np.dot(self.w_h[layer_idx], self.A) + self.b_h[layer_idx]
             self.Z_h.append(self.Z)
             self.A = ReLU(self.Z)
@@ -75,14 +81,15 @@ if __name__ == '__main__':
     n_h = args.hidden_size
     n_l = args.num_hidden_layer
     n_in = args.input_size
+    n_batch = args.batch_size
 
     X, Y = sample_generate()  # the inputs and golden results
     dataset = Dataset(X, Y)
     dataloader = DataLoader(dataset, 64)
 
     model = MultiLayerPerceptron()
-    for epoch_idx in range(args.num_iterate):
-        for batch_idx in range(args.batch_size):
-            sample_batch = dataloader.get_batch(batch_idx)
-            print(sample_batch)
-            # y_pred = model.forward()
+    for epoch_idx in range(args.num_iterate):  # for each epoch
+        for batch_idx in range(n_batch):  # for each batch
+            inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
+            y_pred = model.forward(inputs)
+            print(y_pred)
