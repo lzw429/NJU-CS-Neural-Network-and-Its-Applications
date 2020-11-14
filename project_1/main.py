@@ -42,8 +42,8 @@ class MultiLayerPerceptron:
         :param X: the input tensor [n_batch, n_in]
         :return: the model output [n_batch, n_out]
         """
-
-        self.Z_in = np.matmul(np.array(X), self.w_in.T) + self.b_in  # (n_batch, n_h)
+        self.X = np.array(X)
+        self.Z_in = np.matmul(self.X, self.w_in.T) + self.b_in  # (n_batch, n_h)
         self.A_in = ReLU(self.Z_in)  # (n_batch, n_h)
         self.A = self.A_in
 
@@ -60,9 +60,18 @@ class MultiLayerPerceptron:
         return Log_cosh(y_pred, Y)
 
     def back_prob(self):
-        pass
+        # self.dw_out
+        # self.db_out
+        self.dw = []
+        self.db = []
+        # self.dw_in
+        # self.db_in
 
     def update_parameters(self):
+        self.w_out = self.w_out + lr * self.dw_out * self.Z
+        # self.b_out = self.b_out +
+        self.w_in = self.w_in + lr * self.dw_in * self.X
+        # self.b_in =
         pass
 
     def predict(self):
@@ -77,12 +86,14 @@ if __name__ == '__main__':
     parser.add_argument("--num_hidden_layer", type=int, default=3)
     parser.add_argument("--hidden_size", type=int, default=10)
     parser.add_argument("--num_iterate", type=int, default=10000)
+    parser.add_argument("--lr", type=float, default=0.00005)
     args = parser.parse_args()
 
     n_h = args.hidden_size
     n_l = args.num_hidden_layer
     n_in = args.input_size
     n_batch = args.batch_size
+    lr = args.lr
 
     X, Y = sample_generate()  # the inputs and golden results
     dataset = Dataset(X, Y)
