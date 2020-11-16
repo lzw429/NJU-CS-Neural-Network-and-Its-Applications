@@ -25,6 +25,13 @@ def sample_generate():
 
 class MultiLayerPerceptron:
     def __init__(self, act_func=ReLU(), loss_func=MSELoss()):
+        # functions
+        self.act = act_func.activate
+        self.act_grad = act_func.grad
+        self.loss = loss_func.loss
+        self.loss_grad = loss_func.grad
+
+        # parameters
         self.w_in = np.random.randn(n_h, n_in) * 0.01
         self.b_in = np.zeros(shape=(n_h))
 
@@ -36,10 +43,9 @@ class MultiLayerPerceptron:
 
         self.w_out = np.random.randn(1, n_h) * 0.01
         self.b_out = np.zeros(shape=(1))
-        self.act = act_func.activate
-        self.act_grad = act_func.grad
-        self.loss = loss_func.loss
-        self.loss_grad = loss_func.grad
+
+        self.Z_h
+        self.A_h
 
     def forward(self, X):
         """
@@ -52,8 +58,6 @@ class MultiLayerPerceptron:
         self.A_in = self.act(self.Z_in)  # (n_batch, n_h)
         self.A = self.A_in
 
-        self.Z_h = []
-        self.A_h = []
         for l in range(n_l):  # for each layer
             self.Z = np.matmul(self.A, self.w_h[l]) + self.b_h[l]  # (n_batch, n_h)
             self.Z_h.append(self.Z)
@@ -77,15 +81,18 @@ class MultiLayerPerceptron:
         self.dw_h.append(self.dw_out)
         for l in range(n_l - 1, -1, -1):  # for each layer, l belongs to [n_l - 1, 0]
             if l != 0:
-                x = self.A_h[l - 1]
+                x = self.A_h[l - 1]  # (n_batch, n_l)
             else:
-                x = self.A_in
-            self.dw_h[l] = - np.mean(
-                self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1].T)) * x, axis=0)
-            self.db_h[l] = - np.mean(self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1].T)),
-                                     axis=0)
-        self.dw_in = - np.dot(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0])), self.X)
-        self.db_in = - np.mean(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0])), axis=1)
+                x = self.A_in  # (n_batch, n_l)
+            self.dw_h[l] = - np.dot(
+                self.act_grad(self.Z_h[l]).T * np.sum(np.dot(self.dw_h[l + 1], np.squeeze(self.w_h[l + 1]))),
+                x)  # (n_h, n_h)
+            self.db_h[l] = - np.mean(self.act_grad(self.Z_h[l]).T * np.sum(
+                np.dot(self.dw_h[l + 1], np.squeeze(self.w_h[l + 1]))))
+
+        self.dw_in = - np.dot(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0].T)),
+                              self.X)  # (n_h , n_in)
+        self.db_in = - np.mean(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0].T)))
 
     def update_parameters(self):
         self.w_out -= lr * self.dw_out
@@ -94,7 +101,7 @@ class MultiLayerPerceptron:
             self.w_h[l] -= lr * self.dw_h[l]
             self.b_h[l] -= lr * self.db_h[l]
         self.w_in -= lr * self.dw_in
-        self.b_in -= lr * self.db_in
+        self.b_in -= lr * self.db_in  # (n_h)
 
     def predict(self):
         pass
@@ -105,7 +112,7 @@ if __name__ == '__main__':
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
     parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_hidden_layer", type=int, default=1)
+    parser.add_argument("--num_hidden_layer", type=int, default=10)
     parser.add_argument("--hidden_size", type=int, default=100)
     parser.add_argument("--num_iterate", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=0.00005)
