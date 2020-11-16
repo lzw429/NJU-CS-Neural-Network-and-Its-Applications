@@ -90,7 +90,7 @@ class MultiLayerPerceptron:
     def update_parameters(self):
         self.w_out -= lr * self.dw_out
         self.b_out -= lr * self.db_out
-        for l in range(n_l):  # for each layer
+        for l in range(n_l - 1, -1, -1):  # for each layer
             self.w_h[l] -= lr * self.dw_h[l]
             self.b_h[l] -= lr * self.db_h[l]
         self.w_in -= lr * self.dw_in
@@ -105,8 +105,8 @@ if __name__ == '__main__':
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
     parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_hidden_layer", type=int, default=3)
-    parser.add_argument("--hidden_size", type=int, default=10)
+    parser.add_argument("--num_hidden_layer", type=int, default=1)
+    parser.add_argument("--hidden_size", type=int, default=100)
     parser.add_argument("--num_iterate", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=True)

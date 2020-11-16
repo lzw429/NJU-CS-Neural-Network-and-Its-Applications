@@ -11,10 +11,10 @@ class LossFunc():
 
 class MSELoss(LossFunc):
     def loss(self, y_pred, Y):
-        return np.sum((Y - y_pred) ** 2)
+        return np.sum((y_pred - Y) ** 2)
 
     def grad(self, y_pred, Y):
-        return 2 * np.sum(Y - y_pred)
+        return 2 * np.sum(y_pred - Y)
 
 
 def Huber(y_pred, Y, delta):

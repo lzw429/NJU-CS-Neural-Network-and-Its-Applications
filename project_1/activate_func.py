@@ -14,6 +14,6 @@ class ReLU(ActivationFunc):
         return np.maximum(0.0, x)
 
     def grad(self, x):
-        x[np.where(x >= 0)] = 1
-        x[np.where(x < 0)] = 0
+        x[np.where(x >= 0)] = 1.0
+        x[np.where(x < 0)] = 0.0
         return x
