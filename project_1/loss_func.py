@@ -1,19 +1,19 @@
 import numpy as np
 
 
-class Criterion():
+class LossFunc():
     def loss(self, y_pred, Y):
         pass
 
-    def grad(self, y_pred):
+    def grad(self, y_pred, Y):
         pass
 
 
-class MSELoss(Criterion):
+class MSELoss(LossFunc):
     def loss(self, y_pred, Y):
         return np.sum((Y - y_pred) ** 2)
 
-    def grad(self, y_pred):
+    def grad(self, y_pred, Y):
         return 2 * np.sum(Y - y_pred)
 
 

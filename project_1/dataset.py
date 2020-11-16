@@ -1,7 +1,14 @@
+import numpy as np
+
+
 class Dataset:
     def __init__(self, X, Y):
         self.X = X
         self.Y = Y
+
+    def shuffle(self):
+        np.random.shuffle(self.X)
+        np.random.shuffle(self.Y)
 
     def getitem(self, index):
         if index > len(self.X) or index > len(self.Y):
@@ -17,6 +24,10 @@ class DataLoader:
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.drop_last = drop_last
+
+        # shuffle the data
+        if shuffle:
+            self.dataset.shuffle()
 
         # prepare all batches
         self.batch_list = []

@@ -3,7 +3,7 @@ import argparse
 
 from project_1.dataset import Dataset, DataLoader
 from project_1.activate_func import ReLU
-from project_1.loss_func import Log_cosh
+from project_1.loss_func import Log_cosh, MSELoss
 
 
 def fitted_func(x1, x2):
@@ -23,18 +23,22 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self):
+    def __init__(self, act_func=ReLU(), loss_func=MSELoss()):
         self.w_in = np.random.randn(n_h, n_in) * 0.01
         self.b_in = np.zeros(shape=(n_h))
 
-        self.w_h = []
-        self.b_h = []
+        self.w_h = []  # (n_h, n_h)
+        self.b_h = []  # (n_h)
         for layer_idx in range(n_l):
             self.w_h.append(np.random.randn(n_h, n_h) * 0.01)
             self.b_h.append(np.zeros(shape=(n_h)))
 
         self.w_out = np.random.randn(1, n_h) * 0.01
         self.b_out = np.zeros(shape=(1))
+        self.act = act_func.activate
+        self.act_grad = act_func.grad
+        self.loss = loss_func.loss
+        self.loss_grad = loss_func.grad
 
     def forward(self, X):
         """
@@ -44,35 +48,47 @@ class MultiLayerPerceptron:
         """
         self.X = np.array(X)
         self.Z_in = np.matmul(self.X, self.w_in.T) + self.b_in  # (n_batch, n_h)
-        self.A_in = ReLU(self.Z_in)  # (n_batch, n_h)
+        self.A_in = self.act(self.Z_in)  # (n_batch, n_h)
         self.A = self.A_in
 
         self.Z_h = []
-        for layer_idx in range(n_l):  # for each layer
-            self.Z = np.matmul(self.A, self.w_h[layer_idx]) + self.b_h[layer_idx]  # (n_batch, n_h)
+        self.A_h = []
+        for l in range(n_l):  # for each layer
+            self.Z = np.matmul(self.A, self.w_h[l]) + self.b_h[l]  # (n_batch, n_h)
             self.Z_h.append(self.Z)
-            self.A = ReLU(self.Z)  # (n_batch, n_h)
+            self.A = self.act(self.Z)  # (n_batch, n_h)
+            self.A_h.append(self.A)
         self.Z = np.matmul(self.A, self.w_out.T) + self.b_out  # (n_batch, 1)
-        self.A = ReLU(self.Z)
-        return np.squeeze(self.A)  # (n_batch)
+        self.A = np.squeeze(self.act(self.Z))
+        self.w_h.append(self.w_out)
+        self.Z_h.append(self.Z)
+        self.A_h.append(self.A)
+        return self.A  # (n_batch)
 
     def loss(self, y_pred, Y):
-        return Log_cosh(y_pred, Y)
+        return self.loss(y_pred, Y)
 
-    def back_prob(self):
-        # self.dw_out
-        # self.db_out
-        self.dw = []
-        self.db = []
-        # self.dw_in
-        # self.db_in
+    def back_prob(self, Y):
+        self.dw_out = self.loss_grad(self.A, Y) * self.act_grad(self.Z) * self.A_h[n_l - 1]  # (n_batch, n_h)
+        self.db_out = self.loss_grad(self.A, Y) * self.act_grad(self.Z)  # (n_batch)
+        self.dw_h = [np.zeros([n_batch, n_h])] * (n_l)
+        self.db_h = [np.zeros([n_batch])] * (n_l)
+        self.dw_h.append(self.dw_out)
+        for l in range(n_l - 1, -1, -1):  # for each layer
+            self.dw_h[l] = - self.act_grad(self. Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1])) \
+                           * self.A_h[l - 1]
+            self.db_h[l] = - self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1]))
+        self.dw_in = - self.act_grad(self.Z_in) * np.sum(np.dot(self.dw_h[0], self.w_h[0])) * self.X
+        self.db_in = - self.act_grad(self.Z_in) * np.sum(np.dot(self.dw_h[0], self.w_h[0]))
 
     def update_parameters(self):
-        self.w_out = self.w_out + lr * self.dw_out * self.Z
-        # self.b_out = self.b_out +
-        self.w_in = self.w_in + lr * self.dw_in * self.X
-        # self.b_in =
-        pass
+        self.w_out -= lr * self.dw_out
+        self.b_out -= lr * self.db_out
+        for l in range(n_l):  # for each layer
+            self.w_h[l] -= lr * self.dw_h[l]
+            self.b_h[l] -= lr * self.db_h[l]
+        self.w_in -= lr * self.dw_in
+        self.b_in -= lr * self.db_in
 
     def predict(self):
         pass
@@ -103,5 +119,9 @@ if __name__ == '__main__':
     for epoch_idx in range(args.num_iterate):  # for each epoch
         for batch_idx in range(n_batch):  # for each batch
             inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
-            y_pred = model.forward(inputs)
-            local_loss = model.loss(y_pred, golden)
+            y_pred = model.forward(inputs)  # predict
+            local_loss = model.loss(y_pred, golden)  # get the loss
+            model.back_prob(golden)  # back propagation
+            model.update_parameters()  # update the parameters
+
+            print("[INFO] epoch " + str(epoch_idx) + ", batch " + str(batch_idx) + ": " + local_loss)
