@@ -1,9 +1,10 @@
-import numpy as np
 import argparse
 
-from project_1.dataset import Dataset, DataLoader
+import numpy as np
+
 from project_1.activate_func import ReLU
-from project_1.loss_func import Log_cosh, MSELoss
+from project_1.dataset import Dataset, DataLoader
+from project_1.loss_func import MSELoss
 
 
 def fitted_func(x1, x2):
@@ -69,17 +70,22 @@ class MultiLayerPerceptron:
         return self.loss(y_pred, Y)
 
     def back_prob(self, Y):
-        self.dw_out = self.loss_grad(self.A, Y) * self.act_grad(self.Z) * self.A_h[n_l - 1]  # (n_batch, n_h)
-        self.db_out = self.loss_grad(self.A, Y) * self.act_grad(self.Z)  # (n_batch)
+        self.dw_out = np.mean(self.loss_grad(self.A, Y) * self.act_grad(self.Z) * self.A_h[n_l - 1], axis=0)  # (n_h)
+        self.db_out = np.mean(self.loss_grad(self.A, Y) * self.act_grad(self.Z), axis=0)  # (1)
         self.dw_h = [np.zeros([n_batch, n_h])] * (n_l)
         self.db_h = [np.zeros([n_batch])] * (n_l)
         self.dw_h.append(self.dw_out)
-        for l in range(n_l - 1, -1, -1):  # for each layer
-            self.dw_h[l] = - self.act_grad(self. Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1])) \
-                           * self.A_h[l - 1]
-            self.db_h[l] = - self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1]))
-        self.dw_in = - self.act_grad(self.Z_in) * np.sum(np.dot(self.dw_h[0], self.w_h[0])) * self.X
-        self.db_in = - self.act_grad(self.Z_in) * np.sum(np.dot(self.dw_h[0], self.w_h[0]))
+        for l in range(n_l - 1, -1, -1):  # for each layer, l belongs to [n_l - 1, 0]
+            if l != 0:
+                x = self.A_h[l - 1]
+            else:
+                x = self.A_in
+            self.dw_h[l] = - np.mean(
+                self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1].T)) * x, axis=0)
+            self.db_h[l] = - np.mean(self.act_grad(self.Z_h[l]) * np.sum(np.dot(self.dw_h[l + 1], self.w_h[l + 1].T)),
+                                     axis=0)
+        self.dw_in = - np.dot(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0])), self.X)
+        self.db_in = - np.mean(self.act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0])), axis=1)
 
     def update_parameters(self):
         self.w_out -= lr * self.dw_out
@@ -103,6 +109,7 @@ if __name__ == '__main__':
     parser.add_argument("--hidden_size", type=int, default=10)
     parser.add_argument("--num_iterate", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=0.00005)
+    parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()
 
     n_h = args.hidden_size
@@ -113,7 +120,7 @@ if __name__ == '__main__':
 
     X, Y = sample_generate()  # the inputs and golden results
     dataset = Dataset(X, Y)
-    dataloader = DataLoader(dataset, 64)
+    dataloader = DataLoader(dataset, 64, shuffle=args.shuffle)
 
     model = MultiLayerPerceptron()
     for epoch_idx in range(args.num_iterate):  # for each epoch
@@ -124,4 +131,4 @@ if __name__ == '__main__':
             model.back_prob(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
-            print("[INFO] epoch " + str(epoch_idx) + ", batch " + str(batch_idx) + ": " + local_loss)
+            print("[INFO] epoch " + str(epoch_idx) + ", batch " + str(batch_idx) + ": " + str(local_loss))
