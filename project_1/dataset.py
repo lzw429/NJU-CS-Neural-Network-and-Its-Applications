@@ -19,7 +19,7 @@ class Dataset:
 
 
 class DataLoader:
-    def __init__(self, dataset, batch_size=1, shuffle=False, drop_last=False):
+    def __init__(self, dataset, batch_size=1, shuffle=True, drop_last=True):
         self.dataset = dataset
         self.batch_size = batch_size
         self.shuffle = shuffle

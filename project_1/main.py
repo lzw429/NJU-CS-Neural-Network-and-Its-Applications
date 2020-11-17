@@ -4,7 +4,7 @@ import numpy as np
 
 from project_1.activate_func import ReLU, Tanh
 from project_1.dataset import Dataset, DataLoader
-from project_1.loss_func import MSELoss
+from project_1.loss_func import MSELoss, LogCoshLoss
 
 
 def fitted_func(x1, x2):
@@ -24,7 +24,7 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, hidden_act_func=Tanh(), output_act_func=Tanh(), loss_func=MSELoss()):
+    def __init__(self, hidden_act_func=ReLU(), output_act_func=ReLU(), loss_func=LogCoshLoss()):
         # functions
         self.h_act = hidden_act_func.activate
         self.h_act_grad = hidden_act_func.grad
@@ -35,7 +35,7 @@ class MultiLayerPerceptron:
 
         # parameters
         self.w_in = np.random.randn(n_h, n_in) * 0.01
-        self.b_in = np.zeros(shape=(n_h))
+        self.b_in = np.zeros(shape=n_h)
 
         self.w_h = []  # (n_h, n_h)
         self.b_h = []  # (n_h)
@@ -121,15 +121,15 @@ if __name__ == '__main__':
     parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()
 
-    n_h = args.hidden_size
-    n_l = args.num_hidden_layer
-    n_in = args.input_size
-    n_batch = args.batch_size
-    lr = args.lr
+    n_h: int = args.hidden_size
+    n_l: int = args.num_hidden_layer
+    n_in: int = args.input_size
+    n_batch: int = args.batch_size
+    lr: float = args.lr
 
     X, Y = sample_generate()  # the inputs and golden results
-    dataset = Dataset(X, Y)
-    dataloader = DataLoader(dataset, 64, shuffle=args.shuffle)
+    dataset: Dataset = Dataset(X, Y)
+    dataloader: DataLoader = DataLoader(dataset, 64, shuffle=args.shuffle)
 
     model = MultiLayerPerceptron()
     for epoch_idx in range(args.num_iterate):  # for each epoch
