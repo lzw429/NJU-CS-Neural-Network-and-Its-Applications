@@ -16,7 +16,7 @@ class Model(nn.Module):
             self.layer_h.append(nn.Linear(n_h, n_h))
         self.layer_out = nn.Linear(n_h, 1)
 
-    def forward(self, x, act_hidden=nn.ReLU(), act_out=nn.Sigmoid()):
+    def forward(self, x, act_hidden=nn.LeakyReLU(), act_out=nn.LeakyReLU()):
         A = act_hidden(self.layer_in(x))
         for l in range(n_l):
             A = act_hidden(self.layer_h[l](A))
@@ -41,11 +41,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--num_hidden_layer", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=20)
+    parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
-    parser.add_argument("--lr", type=float, default=0.00005)
+    parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()
 
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     model = Model()
     X, Y = sample_generate()  # the inputs and golden results
     dataset = Dataset(X, Y)
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
     optimizer = optim.AdamW(model.parameters(), lr=args.lr)
     criterion = nn.MSELoss()
 
@@ -73,17 +73,14 @@ if __name__ == '__main__':
 
             optimizer.zero_grad()
             outputs = model(inputs)
-            loss = criterion(outputs, golden)
+            loss = criterion(torch.squeeze(outputs), torch.squeeze(golden))
             loss.backward()
             optimizer.step()
 
             # print statistics
             running_loss += loss.item()
-            print('[%d, %5d] loss: %.3f' % (epoch_idx + 1, batch_idx + 1, running_loss))
-            if running_loss < 0.000001:
-                train_finished = True
-                break
-            running_loss = 0.0
+        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
+
     print('[INFO] Finished Training')
 
     # validation
