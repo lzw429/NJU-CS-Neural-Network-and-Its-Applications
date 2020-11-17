@@ -16,7 +16,7 @@ class Model(nn.Module):
             self.layer_h.append(nn.Linear(n_h, n_h))
         self.layer_out = nn.Linear(n_h, 1)
 
-    def forward(self, x, act_hidden=nn.Sigmoid(), act_out=nn.Sigmoid()):
+    def forward(self, x, act_hidden=nn.ReLU(), act_out=nn.Sigmoid()):
         A = act_hidden(self.layer_in(x))
         for l in range(n_l):
             A = act_hidden(self.layer_h[l](A))
@@ -41,10 +41,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_hidden_layer", type=int, default=1)
-    parser.add_argument("--hidden_size", type=int, default=40)
-    parser.add_argument("--num_epoch", type=int, default=10000)
+    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--num_hidden_layer", type=int, default=2)
+    parser.add_argument("--hidden_size", type=int, default=20)
+    parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()

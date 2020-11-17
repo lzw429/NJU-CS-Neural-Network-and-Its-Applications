@@ -12,8 +12,8 @@ def fitted_func(x1, x2):
 
 
 def sample_generate():
-    x1 = np.arange(-5, 5, 0.01)
-    x2 = np.arange(-5, 5, 0.01)
+    x1 = np.arange(-5, 5, 0.1)
+    x2 = np.arange(-5, 5, 0.1)
     sample_inputs = []
     sample_golden = []
     for i in x1:
@@ -24,7 +24,7 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(), loss_func=LogCoshLoss()):
+    def __init__(self, hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(), loss_func=MSELoss()):
         # functions
         self.h_act = hidden_act_func.activate
         self.h_act_grad = hidden_act_func.grad
@@ -113,10 +113,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_hidden_layer", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=50)
-    parser.add_argument("--num_epoch", type=int, default=10000)
+    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--num_hidden_layer", type=int, default=1)
+    parser.add_argument("--hidden_size", type=int, default=16)
+    parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()
