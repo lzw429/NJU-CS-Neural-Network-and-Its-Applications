@@ -3,6 +3,8 @@ import argparse
 import torch.nn as nn
 import torch.utils.data
 import torch.optim as optim
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
 
 from project_1.main import sample_generate, fitted_func
 
@@ -47,6 +49,7 @@ if __name__ == '__main__':
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
+    parser.add_argument("--dir", type=str)
     args = parser.parse_args()
 
     n_h: int = args.hidden_size
@@ -54,20 +57,23 @@ if __name__ == '__main__':
     n_in: int = args.input_size
     batch_size: int = args.batch_size
     lr: float = args.lr
+    log_file = open(args.dir + "/log.txt", mode="w")
 
     model = Model()
     X, Y = sample_generate()  # the inputs and golden results
+    # draw the fitted surface
+    ax = plt.axes(projection='3d')
+    ax.plot_trisurf(X[:, 0], X[:, 1], Y)
+    plt.show()
+
     dataset = Dataset(X, Y)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
     optimizer = optim.AdamW(model.parameters(), lr=args.lr)
     criterion = nn.MSELoss()
 
     # training
-    train_finished = False
     for epoch_idx in range(args.num_epoch):
         running_loss = 0.0
-        if train_finished:
-            break
         for batch_idx, sample_batched in enumerate(dataloader):
             inputs, golden = sample_batched
 
@@ -79,8 +85,11 @@ if __name__ == '__main__':
 
             # print statistics
             running_loss += loss.item()
-        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
+        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)
+        if running_loss < 0.001:
+            break
 
     print('[INFO] Finished Training')
+    torch.save(model.state_dict(), args.dir + "model.pt")
 
     # validation

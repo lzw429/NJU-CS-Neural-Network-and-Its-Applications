@@ -20,7 +20,7 @@ def sample_generate():
         for j in x2:
             sample_inputs.append((i, j))  # the inputs: 2-d
             sample_golden.append(fitted_func(i, j))  # the golden outputs: 1-d
-    return sample_inputs, sample_golden
+    return np.array(sample_inputs), np.array(sample_golden)
 
 
 class MultiLayerPerceptron:
