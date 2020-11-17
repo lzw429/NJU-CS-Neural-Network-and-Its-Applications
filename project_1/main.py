@@ -2,7 +2,7 @@ import argparse
 
 import numpy as np
 
-from project_1.activate_func import ReLU, Tanh
+from project_1.activate_func import ReLU, Tanh, LeakyReLU
 from project_1.dataset import Dataset, DataLoader
 from project_1.loss_func import MSELoss, LogCoshLoss
 
@@ -24,7 +24,7 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, hidden_act_func=ReLU(), output_act_func=ReLU(), loss_func=LogCoshLoss()):
+    def __init__(self, hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(), loss_func=LogCoshLoss()):
         # functions
         self.h_act = hidden_act_func.activate
         self.h_act_grad = hidden_act_func.grad
@@ -75,11 +75,11 @@ class MultiLayerPerceptron:
     def loss(self, y_pred, Y):
         return self.loss(y_pred, Y)
 
-    def back_prob(self, Y):
+    def backward(self, Y):
         self.dw_out = np.mean(self.loss_grad(self.A, Y) * self.o_act_grad(self.Z) * self.A_h[n_l - 1], axis=0)  # (n_h)
         self.db_out = np.mean(self.loss_grad(self.A, Y) * self.o_act_grad(self.Z), axis=0)  # (1)
-        self.dw_h = [np.zeros([n_batch, n_h])] * n_l
-        self.db_h = [np.zeros([n_batch])] * n_l
+        self.dw_h = [np.zeros([batch_size, n_h])] * n_l
+        self.db_h = [np.zeros([batch_size])] * n_l
         self.dw_h.append(self.dw_out)
         for l in range(n_l - 1, -1, -1):  # for each layer, l belongs to [n_l - 1, 0]
             if l != 0:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--num_hidden_layer", type=int, default=2)
     parser.add_argument("--hidden_size", type=int, default=50)
-    parser.add_argument("--num_iterate", type=int, default=10000)
+    parser.add_argument("--num_epoch", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=True)
     args = parser.parse_args()
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     n_h: int = args.hidden_size
     n_l: int = args.num_hidden_layer
     n_in: int = args.input_size
-    n_batch: int = args.batch_size
+    batch_size: int = args.batch_size
     lr: float = args.lr
 
     X, Y = sample_generate()  # the inputs and golden results
@@ -132,12 +132,12 @@ if __name__ == '__main__':
     dataloader: DataLoader = DataLoader(dataset, 64, shuffle=args.shuffle)
 
     model = MultiLayerPerceptron()
-    for epoch_idx in range(args.num_iterate):  # for each epoch
-        for batch_idx in range(n_batch):  # for each batch
+    for epoch_idx in range(args.num_epoch):  # for each epoch
+        for batch_idx in range(batch_size):  # for each batch
             inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
             y_pred = model.forward(inputs)  # predict
             local_loss = model.loss(y_pred, golden)  # get the loss
-            model.back_prob(golden)  # back propagation
+            model.backward(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
             print("[INFO] epoch " + str(epoch_idx) + ", batch " + str(batch_idx) + ": " + str(local_loss))

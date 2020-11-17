@@ -14,8 +14,22 @@ class ReLU(ActivationFunc):
         return np.maximum(0.0, x)
 
     def grad(self, x):
-        x[np.where(x >= 0)] = 1.0
-        x[np.where(x < 0)] = 0.0
+        x[np.where(x >= 0.0)] = 1.0
+        x[np.where(x < 0.0)] = 0.0
+        return x
+
+
+class LeakyReLU(ActivationFunc):
+    def __init__(self, alpha=0.1):
+        self.alpha = alpha
+
+    def activate(self, x):
+        x[np.where(x < 0.0)] = self.alpha * x[np.where(x < 0.0)]
+        return x
+
+    def grad(self, x):
+        x[np.where(x >= 0.0)] = 1.0
+        x[np.where(x < 0.0)] = self.alpha
         return x
 
 
