@@ -78,8 +78,7 @@ if __name__ == '__main__':
         train_finished = False
         for epoch_idx in range(args.num_epoch):
             running_loss = 0.0
-            if train_finished == True:
-                break
+
             for batch_idx, sample_batched in enumerate(dataloader):
                 inputs, golden = sample_batched
 
@@ -91,11 +90,10 @@ if __name__ == '__main__':
 
                 # print statistics
                 running_loss += loss.item()
-                print('[%d, %5d] loss: %.3f' % (epoch_idx + 1, batch_idx + 1, running_loss), file=log_file)
-                if running_loss < 0.000001:
-                    train_finished = True
-                    break
-                running_loss = 0.0
+            print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)
+            if running_loss < 0.000001:
+                train_finished = True
+                break
 
         print('[INFO] Finished Training')
         torch.save(neuron.state_dict(), args.model_path)
