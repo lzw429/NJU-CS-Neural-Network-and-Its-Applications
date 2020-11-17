@@ -19,7 +19,7 @@ class Dataset:
 
 
 class DataLoader:
-    def __init__(self, dataset, batch_size=1, shuffle=True, drop_last=True):
+    def __init__(self, dataset, batch_size, shuffle, drop_last=True):
         self.dataset = dataset
         self.batch_size = batch_size
         self.shuffle = shuffle
@@ -40,6 +40,9 @@ class DataLoader:
             begin = (len(dataset) // batch_size) * batch_size
             end = len(dataset)
             self.batch_list.append((self.dataset.X[begin:end], self.dataset.Y[begin:end]))
+
+    def get_num_batch(self):
+        return len(self.batch_list)
 
     def get_batch(self, batch_idx):
         if batch_idx < len(self.batch_list):

@@ -39,3 +39,22 @@ class Tanh(ActivationFunc):
 
     def grad(self, x):
         return 1 - np.power(np.tanh(x), 2)
+
+
+class Sigmoid(ActivationFunc):
+    def activate(self, x):
+        return 1 / (1 + np.exp(-x))
+
+    def grad(self, x):
+        return self.activate(x) * (1 - self.activate(x))
+
+
+class Linear(ActivationFunc):
+    def __init__(self, k=1):
+        self.k = k
+
+    def activate(self, x):
+        return self.k * x
+
+    def grad(self, x):
+        return x * 0 + self.k

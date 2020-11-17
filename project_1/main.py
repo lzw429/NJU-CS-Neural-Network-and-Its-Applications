@@ -2,7 +2,7 @@ import argparse
 
 import numpy as np
 
-from project_1.activate_func import ReLU, Tanh, LeakyReLU
+from project_1.activate_func import ReLU, Tanh, LeakyReLU, Sigmoid, Linear
 from project_1.dataset import Dataset, DataLoader
 from project_1.loss_func import MSELoss, LogCoshLoss
 
@@ -113,12 +113,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=128)
-    parser.add_argument("--num_hidden_layer", type=int, default=1)
+    parser.add_argument("--batch_size", type=int, default=32)
+    parser.add_argument("--num_hidden_layer", type=int, default=2)
     parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
-    parser.add_argument("--shuffle", type=bool, default=True)
+    parser.add_argument("--shuffle", type=bool, default=False)
     args = parser.parse_args()
 
     n_h: int = args.hidden_size
@@ -129,15 +129,16 @@ if __name__ == '__main__':
 
     X, Y = sample_generate()  # the inputs and golden results
     dataset: Dataset = Dataset(X, Y)
-    dataloader: DataLoader = DataLoader(dataset, 64, shuffle=args.shuffle)
+    dataloader: DataLoader = DataLoader(dataset, batch_size, shuffle=args.shuffle)
 
     model = MultiLayerPerceptron()
     for epoch_idx in range(args.num_epoch):  # for each epoch
-        for batch_idx in range(batch_size):  # for each batch
+        running_loss = 0.0
+        for batch_idx in range(dataloader.get_num_batch()):  # for each batch
             inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
             y_pred = model.forward(inputs)  # predict
-            local_loss = model.loss(y_pred, golden)  # get the loss
+            running_loss += model.loss(y_pred, golden)  # get the loss
             model.backward(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
-            print("[INFO] epoch " + str(epoch_idx) + ", batch " + str(batch_idx) + ": " + str(local_loss))
+        print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss))
