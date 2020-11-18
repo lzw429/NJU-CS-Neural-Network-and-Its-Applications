@@ -1,10 +1,13 @@
 import argparse
-
+import copy
 import numpy as np
 
 from project_1.activate_func import ReLU, Tanh, LeakyReLU, Sigmoid, Linear
 from project_1.dataset import Dataset, DataLoader
 from project_1.loss_func import MSELoss, LogCoshLoss
+import matplotlib.pyplot as plt
+
+from project_1.optim import SGD, Adam, Optimizer
 
 
 def fitted_func(x1, x2):
@@ -24,7 +27,8 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(), loss_func=MSELoss()):
+    def __init__(self, optim: Optimizer = SGD(0.00005), hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(),
+                 loss_func=MSELoss()):
         # functions
         self.h_act = hidden_act_func.activate
         self.h_act_grad = hidden_act_func.grad
@@ -41,15 +45,21 @@ class MultiLayerPerceptron:
         self.b_h = []  # (n_h)
         for l in range(n_l):
             self.w_h.append(np.random.randn(n_h, n_h) * 0.01)
-            self.b_h.append(np.zeros(shape=(n_h)))
+            self.b_h.append(np.zeros(shape=n_h))
 
         self.w_out = np.random.randn(1, n_h) * 0.01
-        self.b_out = np.zeros(shape=(1))
+        self.b_out = np.zeros(shape=1)
         self.w_h.append(self.w_out)
         self.b_h.append(self.b_out)
 
         self.Z_h = list(range(n_l + 1))
         self.A_h = list(range(n_l + 1))
+
+        self.optim = {'w_in': copy.deepcopy(optim), 'b_in': copy.deepcopy(optim), 'w_out': copy.deepcopy(optim),
+                      'b_out': copy.deepcopy(optim)}
+        for l in range(n_l):
+            self.optim['w_h_' + str(l)] = copy.deepcopy(optim)
+            self.optim['b_h_' + str(l)] = copy.deepcopy(optim)
 
     def forward(self, X):
         """
@@ -97,13 +107,13 @@ class MultiLayerPerceptron:
         self.db_in = - np.mean(self.h_act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0].T)), axis=1)
 
     def update_parameters(self):
-        self.w_out -= lr * self.dw_out
-        self.b_out -= lr * self.db_out
+        self.optim['w_out'].update_parameters(self.w_out, self.dw_out)
+        self.optim['b_out'].update_parameters(self.b_out, self.db_out)
         for l in range(n_l - 1, -1, -1):  # for each layer
-            self.w_h[l] -= lr * self.dw_h[l]
-            self.b_h[l] -= lr * self.db_h[l]
-        self.w_in -= lr * self.dw_in
-        self.b_in -= lr * self.db_in  # (n_h)
+            self.optim['w_h_' + str(l)].update_parameters(self.w_h[l], self.dw_h[l])
+            self.optim['b_h_' + str(l)].update_parameters(self.b_h[l], self.db_h[l])
+        self.optim['w_in'].update_parameters(self.w_in, self.dw_in)
+        self.optim['b_in'].update_parameters(self.b_in, self.db_in)
 
     def predict(self):
         pass
@@ -113,12 +123,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=32)
+    parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--num_hidden_layer", type=int, default=2)
     parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=False)
+    parser.add_argument("--plot", type=bool, default=True)
+    parser.add_argument("--dir", type=str)
     args = parser.parse_args()
 
     n_h: int = args.hidden_size
@@ -126,12 +138,18 @@ if __name__ == '__main__':
     n_in: int = args.input_size
     batch_size: int = args.batch_size
     lr: float = args.lr
+    log_file = open(args.dir + "/log.txt", mode="w")
 
     X, Y = sample_generate()  # the inputs and golden results
     dataset: Dataset = Dataset(X, Y)
     dataloader: DataLoader = DataLoader(dataset, batch_size, shuffle=args.shuffle)
 
-    model = MultiLayerPerceptron()
+    if args.plot:
+        ax = plt.axes(projection='3d')
+        ax.plot_trisurf(X[:, 0], X[:, 1], Y)
+        plt.show()
+
+    model = MultiLayerPerceptron(Adam(lr))
     for epoch_idx in range(args.num_epoch):  # for each epoch
         running_loss = 0.0
         for batch_idx in range(dataloader.get_num_batch()):  # for each batch
@@ -141,4 +159,6 @@ if __name__ == '__main__':
             model.backward(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
+        print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss), file=log_file)
+        log_file.flush()
         print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss))

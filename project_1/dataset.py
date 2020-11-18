@@ -2,6 +2,7 @@ import numpy as np
 
 
 class Dataset:
+
     def __init__(self, X, Y):
         self.X = X
         self.Y = Y
@@ -9,6 +10,10 @@ class Dataset:
     def shuffle(self):
         np.random.shuffle(self.X)
         np.random.shuffle(self.Y)
+
+    def normalization(self, data):
+        range = np.max(data) - np.min(data)
+        return (data - np.min(data)) / range
 
     def getitem(self, index):
         if index > len(self.X) or index > len(self.Y):

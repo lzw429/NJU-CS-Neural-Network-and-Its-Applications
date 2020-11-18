@@ -49,6 +49,7 @@ if __name__ == '__main__':
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
+    parser.add_argument("--plot", type=bool, default=True)
     parser.add_argument("--dir", type=str)
     args = parser.parse_args()
 
@@ -62,9 +63,10 @@ if __name__ == '__main__':
     model = Model()
     X, Y = sample_generate()  # the inputs and golden results
     # draw the fitted surface
-    ax = plt.axes(projection='3d')
-    ax.plot_trisurf(X[:, 0], X[:, 1], Y)
-    plt.show()
+    if args.plot:
+        ax = plt.axes(projection='3d')
+        ax.plot_trisurf(X[:, 0], X[:, 1], Y)
+        plt.show()
 
     dataset = Dataset(X, Y)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
@@ -86,6 +88,8 @@ if __name__ == '__main__':
             # print statistics
             running_loss += loss.item()
         print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)
+        log_file.flush()
+        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
         if running_loss < 0.001:
             break
 
@@ -93,3 +97,10 @@ if __name__ == '__main__':
     torch.save(model.state_dict(), args.dir + "model.pt")
 
     # validation
+    # with torch.no_grad():
+    #     for batch_idx, sample_batched in enumerate(dataloader):
+    #         inputs, golden = sample_batched
+    #         outputs = model(inputs)
+            # outputs_list = torch.cat((outputs_list, outputs), 0)
+    # plt.plot(x, outputs_list, color='y')
+    # plt.show()

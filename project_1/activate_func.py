@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 
 
 class ActivationFunc():
@@ -14,9 +15,10 @@ class ReLU(ActivationFunc):
         return np.maximum(0.0, x)
 
     def grad(self, x):
-        x[np.where(x >= 0.0)] = 1.0
-        x[np.where(x < 0.0)] = 0.0
-        return x
+        res = copy.deepcopy(x)
+        res[np.where(x >= 0.0)] = 1.0
+        res[np.where(x < 0.0)] = 0.0
+        return res
 
 
 class LeakyReLU(ActivationFunc):
@@ -24,13 +26,15 @@ class LeakyReLU(ActivationFunc):
         self.alpha = alpha
 
     def activate(self, x):
-        x[np.where(x < 0.0)] = self.alpha * x[np.where(x < 0.0)]
-        return x
+        res = copy.deepcopy(x)
+        res[np.where(x < 0.0)] = self.alpha * x[np.where(x < 0.0)]
+        return res
 
     def grad(self, x):
-        x[np.where(x >= 0.0)] = 1.0
-        x[np.where(x < 0.0)] = self.alpha
-        return x
+        res = copy.deepcopy(x)
+        res[np.where(x >= 0.0)] = 1.0
+        res[np.where(x < 0.0)] = self.alpha
+        return res
 
 
 class Tanh(ActivationFunc):
