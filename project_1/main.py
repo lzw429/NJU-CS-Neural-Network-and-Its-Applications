@@ -72,9 +72,8 @@ class MultiLayerPerceptron:
         self.A_in = self.h_act(self.Z_in)  # (n_batch, n_h)
 
         for l in range(n_l):  # for each layer
-            self.Z = np.dot(self.A_in, self.w_h[l]) + self.b_h[l]  # (n_batch, n_h)
-            self.Z_h[l] = self.Z
-            self.A_h[l] = self.h_act(self.Z)  # (n_batch, n_h)
+            self.Z_h[l] = np.dot(self.A_in, self.w_h[l]) + self.b_h[l]  # (n_batch, n_h)
+            self.A_h[l] = self.h_act(self.Z_h[l])  # (n_batch, n_h)
         self.Z = np.matmul(self.A_h[n_l - 1], self.w_out.T) + self.b_out  # (n_batch, 1)
         self.A = np.squeeze(self.o_act(self.Z))
         self.w_h[n_l] = self.w_out
@@ -127,7 +126,7 @@ if __name__ == '__main__':
     parser.add_argument("--num_hidden_layer", type=int, default=2)
     parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
-    parser.add_argument("--lr", type=float, default=0.00005)
+    parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=False)
     parser.add_argument("--plot", type=bool, default=True)
     parser.add_argument("--dir", type=str)
@@ -162,3 +161,12 @@ if __name__ == '__main__':
         print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss), file=log_file)
         log_file.flush()
         print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss))
+
+    # validation
+    # loss = 0.0
+    # outputs = np.array()
+    # for batch_idx in range(dataloader.get_num_batch()):
+    #     inputs, golden = dataloader.get_batch(batch_idx)
+    #     y_pred = model.forward(inputs)
+    #     loss += model.loss(y_pred, golden)
+        # stack the prediction
