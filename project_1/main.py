@@ -7,7 +7,7 @@ from project_1.dataset import Dataset, DataLoader
 from project_1.loss_func import MSELoss, LogCoshLoss
 import matplotlib.pyplot as plt
 
-from project_1.optim import SGD, Adam, Optimizer
+from project_1.optim import SGD, Adam, Optimizer, AdamW
 
 
 def fitted_func(x1, x2):
@@ -149,7 +149,7 @@ if __name__ == '__main__':
         ax.plot_trisurf(X[:, 0], X[:, 1], Y)
         plt.show()
 
-    model = MultiLayerPerceptron(Adam(lr))
+    model = MultiLayerPerceptron(AdamW(lr))
     for epoch_idx in range(args.num_epoch):  # for each epoch
         running_loss = 0.0
         for batch_idx in range(dataloader.get_num_batch()):  # for each batch
