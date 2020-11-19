@@ -122,11 +122,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=64)
+    parser.add_argument("--batch_size", type=int, default=100)
     parser.add_argument("--num_hidden_layer", type=int, default=2)
     parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
-    parser.add_argument("--lr", type=float, default=0.0001)
+    parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=False)
     parser.add_argument("--plot", type=bool, default=True)
     parser.add_argument("--dir", type=str)
@@ -149,6 +149,7 @@ if __name__ == '__main__':
         plt.show()
 
     model = MultiLayerPerceptron(AdamW(lr))
+    last_loss = 0.0
     for epoch_idx in range(args.num_epoch):  # for each epoch
         running_loss = 0.0
         for batch_idx in range(dataloader.get_num_batch()):  # for each batch
@@ -161,6 +162,9 @@ if __name__ == '__main__':
         print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss), file=log_file)
         log_file.flush()
         print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss))
+        if running_loss > last_loss != 0.0:
+            print("[WARN] the loss is increasing")
+        last_loss = running_loss
 
     # validation
     # loss = 0.0
@@ -169,4 +173,4 @@ if __name__ == '__main__':
     #     inputs, golden = dataloader.get_batch(batch_idx)
     #     y_pred = model.forward(inputs)
     #     loss += model.loss(y_pred, golden)
-        # stack the prediction
+    # stack the prediction
