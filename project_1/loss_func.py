@@ -11,10 +11,10 @@ class LossFunc():
 
 class MSELoss(LossFunc):
     def loss(self, y_pred, Y):
-        return np.sum((y_pred - Y) ** 2) / 2
+        return np.mean((y_pred - Y) ** 2) / 2
 
     def grad(self, y_pred, Y):
-        return np.sum(y_pred - Y)
+        return np.mean(y_pred - Y)
 
 
 class LogCoshLoss(LossFunc):

@@ -6,6 +6,7 @@ from project_1.activate_func import ReLU, Tanh, LeakyReLU, Sigmoid, Linear
 from project_1.dataset import Dataset, DataLoader
 from project_1.loss_func import MSELoss, LogCoshLoss
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 from project_1.optim import SGD, Adam, Optimizer, AdamW
 
@@ -95,15 +96,17 @@ class MultiLayerPerceptron:
                 x = self.A_h[l - 1]  # (n_batch, n_l)
             else:
                 x = self.A_in  # (n_batch, n_l)
-            self.dw_h[l] = - np.dot(
+            self.dw_h[l] = - 1.0 / batch_size * np.dot(
                 self.h_act_grad(self.Z_h[l]).T * np.sum(np.dot(self.dw_h[l + 1], np.squeeze(self.w_h[l + 1]))),
                 x)  # (n_h, n_h)
             self.db_h[l] = - np.mean(self.h_act_grad(self.Z_h[l]).T * np.sum(
                 np.dot(self.dw_h[l + 1], np.squeeze(self.w_h[l + 1]))), axis=1)
 
-        self.dw_in = - np.dot(self.h_act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0].T)),
-                              self.X)  # (n_h , n_in)
-        self.db_in = - np.mean(self.h_act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], self.w_h[0].T)), axis=1)
+        self.dw_in = - 1.0 / batch_size * np.dot(
+            self.h_act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], np.squeeze(self.w_h[0]))),
+            self.X)  # (n_h , n_in)
+        self.db_in = - np.mean(self.h_act_grad(self.Z_in).T * np.sum(np.dot(self.dw_h[0], np.squeeze(self.w_h[0]))),
+                               axis=1)
 
     def update_parameters(self):
         self.optim['w_out'].update_parameters(self.w_out, self.dw_out)
@@ -123,8 +126,8 @@ if __name__ == '__main__':
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
     parser.add_argument("--batch_size", type=int, default=100)
-    parser.add_argument("--num_hidden_layer", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=16)
+    parser.add_argument("--num_hidden_layer", type=int, default=1)
+    parser.add_argument("--hidden_size", type=int, default=8)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=False)
