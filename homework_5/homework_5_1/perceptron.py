@@ -2,7 +2,7 @@ import torch.nn as nn
 
 
 class Perceptron(nn.Module):
-    def __init__(self, perceptron=nn.Linear(2, 1), act=nn.Tanh()):
+    def __init__(self, perceptron=nn.Linear(2, 1), act=nn.Sigmoid()):
         """
         The initialization of the perceptron
         :param perceptron: the single layer

@@ -19,13 +19,13 @@ def radius_square(x, y):
 
 
 def sample_generate():
-    x = np.range(-2, 2, 0.01)
-    y = np.range(-2, 2, 0.01)
+    x = np.arange(-2, 2, 0.01)
+    y = np.arange(-2, 2, 0.01)
 
     sample_inputs = []
     sample_golden = []
-    for i in range(x):
-        for j in range(y):
+    for i in x:
+        for j in y:
             if radius_square(i, j) <= np.sqrt(2):
                 sample_inputs.append((i, j))
                 sample_golden.append(0)
