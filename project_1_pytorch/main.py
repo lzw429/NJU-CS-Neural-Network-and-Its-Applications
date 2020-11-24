@@ -6,6 +6,7 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 
+from project_1.dataset import normalization
 from project_1.main import sample_generate, fitted_func
 
 
@@ -29,6 +30,7 @@ class Model(nn.Module):
 class Dataset(torch.utils.data.Dataset):
 
     def __init__(self, X, Y):
+        X = normalization(X)
         self.inputs = torch.tensor(X, dtype=torch.float)
         self.golden = torch.tensor(Y, dtype=torch.float)
 
@@ -43,9 +45,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--num_hidden_layer", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=16)
+    parser.add_argument("--batch_size", type=int, default=50)
+    parser.add_argument("--num_hidden_layer", type=int, default=4)
+    parser.add_argument("--hidden_size", type=int, default=50)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
@@ -74,6 +76,7 @@ if __name__ == '__main__':
     criterion = nn.MSELoss()
 
     # training
+    last_loss = 0.0
     for epoch_idx in range(args.num_epoch):
         running_loss = 0.0
         for batch_idx, sample_batched in enumerate(dataloader):
@@ -90,6 +93,9 @@ if __name__ == '__main__':
         print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)
         log_file.flush()
         print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
+        if running_loss > last_loss:
+            print("[WARN] the loss is increasing")
+        last_loss = running_loss
         if running_loss < 0.001:
             break
 
@@ -101,6 +107,6 @@ if __name__ == '__main__':
     #     for batch_idx, sample_batched in enumerate(dataloader):
     #         inputs, golden = sample_batched
     #         outputs = model(inputs)
-            # outputs_list = torch.cat((outputs_list, outputs), 0)
+    # outputs_list = torch.cat((outputs_list, outputs), 0)
     # plt.plot(x, outputs_list, color='y')
     # plt.show()

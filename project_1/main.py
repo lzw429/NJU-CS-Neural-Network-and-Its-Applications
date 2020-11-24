@@ -28,7 +28,7 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, optim: Optimizer = SGD(0.00005), hidden_act_func=LeakyReLU(), output_act_func=LeakyReLU(),
+    def __init__(self, optim: Optimizer = SGD(0.00005), hidden_act_func=LeakyReLU(), output_act_func=Linear(0.1),
                  loss_func=MSELoss()):
         # functions
         self.h_act = hidden_act_func.activate
@@ -39,16 +39,16 @@ class MultiLayerPerceptron:
         self.loss_grad = loss_func.grad
 
         # parameters
-        self.w_in = np.random.randn(n_h, n_in) * 0.01
+        self.w_in = np.random.randn(n_h, n_in) * 0.03
         self.b_in = np.zeros(shape=n_h)
 
         self.w_h = []  # (n_h, n_h)
         self.b_h = []  # (n_h)
         for l in range(n_l):
-            self.w_h.append(np.random.randn(n_h, n_h) * 0.01)
+            self.w_h.append(np.random.randn(n_h, n_h) * 0.03)
             self.b_h.append(np.zeros(shape=n_h))
 
-        self.w_out = np.random.randn(1, n_h) * 0.01
+        self.w_out = np.random.randn(1, n_h) * 0.03
         self.b_out = np.zeros(shape=1)
         self.w_h.append(self.w_out)
         self.b_h.append(self.b_out)
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     parser.add_argument("--output_size", type=int, default=1)
     parser.add_argument("--batch_size", type=int, default=100)
     parser.add_argument("--num_hidden_layer", type=int, default=1)
-    parser.add_argument("--hidden_size", type=int, default=8)
+    parser.add_argument("--hidden_size", type=int, default=16)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.00005)
     parser.add_argument("--shuffle", type=bool, default=False)
