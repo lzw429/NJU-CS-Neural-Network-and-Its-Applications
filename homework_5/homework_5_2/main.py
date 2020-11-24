@@ -3,7 +3,6 @@ import argparse
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.utils.data
 import torch.optim as optim
 
 from homework_5_2.dataset import Dataset
@@ -26,7 +25,7 @@ class Model(nn.Module):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--hidden_size", type=int, default=20)
+    parser.add_argument("--hidden_size", type=int, default=50)
     parser.add_argument("--num_epoch", type=int, default=10000)
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--lr", type=float, default=0.0001)
