@@ -18,6 +18,10 @@ class Model(nn.Module):
 
     def forward(self, x):
         a = self.act_h(self.layer_in(x))
+        self.a_in = a
+        self.a_h = [0] * self.n_l
         for l in range(self.n_l):
             a = self.act_h(self.layer_h[l](a))
-        return self.act_o(self.layer_out(a))
+            self.a_h[l] = a
+        self.a_out = self.act_o(self.layer_out(a))
+        return self.a_out
