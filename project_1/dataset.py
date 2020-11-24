@@ -14,10 +14,6 @@ class Dataset:
         if norm:
             self.X = normalization(self.X)
 
-    def shuffle(self):
-        np.random.shuffle(self.X)
-        np.random.shuffle(self.Y)
-
     def getitem(self, index):
         if index > len(self.X) or index > len(self.Y):
             return self.X[index], self.Y[index]
