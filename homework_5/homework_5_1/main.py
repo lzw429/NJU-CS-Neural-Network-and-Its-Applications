@@ -9,10 +9,20 @@ import torch.optim as optim
 
 
 def perceptron_test():
+    print("[INFO] The single-layer Perceptron training starts")
     perceptron = Perceptron()
+    model_test(perceptron)
 
+
+def neural_network_test():
+    print("[INFO] The neural network training starts")
+    neural_network = NeuralNetwork(n_h=2, hidden_size=20)
+    model_test(neural_network)
+
+
+def model_test(model):
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    optimizer = optim.AdamW(perceptron.parameters(), lr)
+    optimizer = optim.AdamW(model.parameters(), lr)
     criterion = nn.BCELoss()
 
     last_loss = 0.0
@@ -22,7 +32,7 @@ def perceptron_test():
             inputs, golden = sample_batched
 
             optimizer.zero_grad()
-            outputs = perceptron(inputs)
+            outputs = model(inputs)
             loss = criterion(outputs, golden)
             loss.backward()
             optimizer.step()
@@ -38,27 +48,22 @@ def perceptron_test():
     print("[INFO] Finished Training")
 
 
-def neural_network_test():
-    neural_network = NeuralNetwork(n_h=2, hidden_size=20)
-
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    optimizer = optim.AdamW(neural_network.parameters(), lr)
-    criterion = nn.BCELoss()
-
-    last_loss = 0.0
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--batch_size", type=int, default=50)
     parser.add_argument("--num_epoch", type=int, default=100000)
+    parser.add_argument("--model", type=int, default=1)
     args = parser.parse_args()
     lr = args.lr
     batch_size = args.batch_size
     num_epoch = args.num_epoch
+    test_model = args.model
 
     X, Y = sample_generate()
 
     dataset = Dataset(X, Y)
-    perceptron_test()
+    if test_model == 0:
+        perceptron_test()
+    elif test_model == 1:
+        neural_network_test()
