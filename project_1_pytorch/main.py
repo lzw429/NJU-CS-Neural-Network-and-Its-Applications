@@ -45,14 +45,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=50)
-    parser.add_argument("--num_hidden_layer", type=int, default=3)
-    parser.add_argument("--hidden_size", type=int, default=100)
+    parser.add_argument("--batch_size", type=int, default=100)
+    parser.add_argument("--num_hidden_layer", type=int, default=4)
+    parser.add_argument("--hidden_size", type=int, default=150)
     parser.add_argument("--num_epoch", type=int, default=500000)
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
     parser.add_argument("--plot", type=bool, default=True)
     parser.add_argument("--dir", type=str)
+    parser.add_argument("--optimizer", type=str, default="adamw")  # 'sgd', 'adam', 'adamw'
     args = parser.parse_args()
 
     n_h: int = args.hidden_size
@@ -72,7 +73,14 @@ if __name__ == '__main__':
 
     dataset = Dataset(X, Y)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    optimizer = optim.AdamW(model.parameters(), lr=args.lr)
+
+    if args.optimizer.lower() == 'sgd':
+        optimizer = optim.SGD(model.parameters(), lr=args.lr)
+    elif args.optimizer.lower() == 'adam':
+        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    elif args.optimizer.lower() == 'adamw':
+        optimizer = optim.AdamW(model.parameters(), lr=args.lr)
+
     criterion = nn.MSELoss()
 
     # training
