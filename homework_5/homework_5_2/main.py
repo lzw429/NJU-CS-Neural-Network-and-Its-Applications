@@ -3,7 +3,6 @@ import argparse
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.utils.data
 import torch.optim as optim
 
 from homework_5_2.dataset import Dataset
@@ -26,11 +25,16 @@ class Model(nn.Module):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--hidden_size", type=int, default=20)
-    parser.add_argument("--num_epoch", type=int, default=10000)
-    parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--lr", type=float, default=0.0001)
+    parser.add_argument('--hidden_size', type=int, default=100)
+    parser.add_argument('--num_epoch', type=int, default=10000)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--lr', type=float, default=0.0001)
+    parser.add_argument('--dir', type=str,
+                        default='/Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_2')
+    parser.add_argument('--do_train', type=bool, default=True)
+    parser.add_argument('--do_valid', type=bool, default=True)
     args = parser.parse_args()
+
     hidden_size = args.hidden_size
     batch_size = args.batch_size
     num_epoch = args.num_epoch
@@ -50,24 +54,37 @@ if __name__ == '__main__':
     training_dataloader = torch.utils.data.DataLoader(training_dataset, batch_size=batch_size, shuffle=False)
     testing_dataloader = torch.utils.data.DataLoader(testing_dataset, batch_size=batch_size, shuffle=False)
 
-    last_loss = 0.0
-    for epoch_idx in range(num_epoch):
-        running_loss = 0.0
-        for batch_idx, sample_batched in enumerate(training_dataloader):
-            inputs, golden = sample_batched
+    if args.do_train:
+        last_loss = 0.0
+        for epoch_idx in range(num_epoch):
+            running_loss = 0.0
+            for batch_idx, sample_batched in enumerate(training_dataloader):
+                inputs, golden = sample_batched
 
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, golden)
-            loss.backward()
-            optimizer.step()
+                optimizer.zero_grad()
+                outputs = model(inputs)
+                loss = criterion(outputs, golden)
+                loss.backward()
+                optimizer.step()
 
-            running_loss += loss.item()
-        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
-        if running_loss > last_loss:
-            print("[WARN] the loss is increasing")
-        last_loss = running_loss
-        if running_loss < 0.001:
-            break
+                running_loss += loss.item()
+            print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
+            if running_loss > last_loss:
+                print('[WARN] the loss is increasing')
+            last_loss = running_loss
+            if running_loss < 0.0001:
+                break
 
-    print('[INFO] Finished Training')
+        print('[INFO] Finished Training')
+
+    if args.do_valid:
+        loss = 0.0
+        outputs_list = torch.tensor([], dtype=torch.float)
+        with torch.no_grad():
+            for batch_idx, sample_batched in enumerate(testing_dataloader):
+                inputs, golden = sample_batched
+                outputs = model(inputs)
+                outputs_list = torch.cat((outputs_list, outputs), 0)
+                loss += criterion(outputs, golden)
+        print('validation loss: ' + str(loss))
+        print(outputs_list)
