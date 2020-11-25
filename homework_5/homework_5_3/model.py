@@ -15,11 +15,12 @@ class Model(nn.Module):
         for l in range(self.n_l):
             self.layer_h.append(nn.Linear(self.hidden_size, self.hidden_size))
         self.layer_out = nn.Linear(self.hidden_size, 1)
+        self.a_in = None
+        self.a_h = [0] * self.n_l
+        self.a_out = None
 
     def forward(self, x):
         a = self.act_h(self.layer_in(x))
-        self.a_in = a
-        self.a_h = [0] * self.n_l
         for l in range(self.n_l):
             a = self.act_h(self.layer_h[l](a))
             self.a_h[l] = a
