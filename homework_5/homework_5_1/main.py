@@ -21,7 +21,7 @@ def neural_network_test():
 
 
 def model_test(model):
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
     optimizer = optim.AdamW(model.parameters(), lr)
     criterion = nn.BCELoss()
 
@@ -33,13 +33,13 @@ def model_test(model):
 
             optimizer.zero_grad()
             outputs = model(inputs)
-            loss = criterion(outputs, golden)
+            loss = criterion(torch.squeeze(outputs), torch.squeeze(golden))
             loss.backward()
             optimizer.step()
 
             running_loss += loss.item()
         print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))
-        if running_loss > last_loss:
+        if running_loss > last_loss and epoch_idx > 0:
             print("[WARN] the loss is increasing")
         last_loss = running_loss
         if running_loss < 0.001:

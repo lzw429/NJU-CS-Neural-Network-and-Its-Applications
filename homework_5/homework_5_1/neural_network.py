@@ -2,7 +2,7 @@ import torch.nn as nn
 
 
 class NeuralNetwork(nn.Module):
-    def __init__(self, n_h, hidden_size, h_act=nn.LeakyReLU(), o_act=nn.Tanh()):
+    def __init__(self, n_h, hidden_size, h_act=nn.LeakyReLU(), o_act=nn.Sigmoid()):
         """
         The initialization of the neural network
         :param n_h: the number of hidden layers

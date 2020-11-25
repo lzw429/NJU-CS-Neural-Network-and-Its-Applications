@@ -72,18 +72,19 @@ if __name__ == '__main__':
             if running_loss > last_loss:
                 print('[WARN] the loss is increasing')
             last_loss = running_loss
-            if last_loss - running_loss < 0.001:
+            if running_loss < 0.0001:
                 break
 
         print('[INFO] Finished Training')
 
     if args.do_valid:
         loss = 0.0
+        outputs_list = torch.tensor([], dtype=torch.float)
         with torch.no_grad():
             for batch_idx, sample_batched in enumerate(testing_dataloader):
                 inputs, golden = sample_batched
                 outputs = model(inputs)
                 outputs_list = torch.cat((outputs_list, outputs), 0)
-                loss = criterion(outputs, golden)
-        print('validation loss: ' + loss)
+                loss += criterion(outputs, golden)
+        print('validation loss: ' + str(loss))
         print(outputs_list)
