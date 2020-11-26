@@ -7,7 +7,6 @@ import torch.utils.data
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def perceptron_test():
@@ -88,7 +87,6 @@ if __name__ == '__main__':
     test_model = args.model
 
     X, Y = sample_generate()
-    # plt.plot(x, dataset.golden, color='b')
 
     dataset = Dataset(X, Y)
     if test_model == 0:
