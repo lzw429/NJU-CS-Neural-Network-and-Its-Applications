@@ -1,0 +1,326 @@
+/Users/shuyiheng/opt/anaconda3/bin/python3 "/Users/shuyiheng/Library/Application Support/JetBrains/Toolbox/apps/PyCharm-P/ch-0/202.7660.27/PyCharm.app/Contents/plugins/python/helpers/pydev/pydevd.py" --cmd-line --multiproc --qt-support=auto --client 127.0.0.1 --port 64035 --file /Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_1/main.py
+pydev debugger: process 70906 is connecting
+Connected to pydev debugger (build 202.7660.27)
+[INFO] The single-layer Perceptron training starts
+[1] loss: 2178.193
+validation: 91048 / 160000 =  0.56905
+[2] loss: 1968.740
+[3] loss: 1903.821
+[4] loss: 1891.747
+[5] loss: 1890.121
+[6] loss: 1889.904
+[7] loss: 1889.875
+[8] loss: 1889.858
+[9] loss: 1889.871
+[WARN] the loss is increasing
+[10] loss: 1889.858
+[11] loss: 1889.872
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[12] loss: 1889.871
+[13] loss: 1889.861
+[14] loss: 1889.871
+[WARN] the loss is increasing
+[15] loss: 1889.865
+[16] loss: 1889.867
+[WARN] the loss is increasing
+[17] loss: 1889.871
+[WARN] the loss is increasing
+[18] loss: 1889.865
+[19] loss: 1889.866
+[WARN] the loss is increasing
+[20] loss: 1889.869
+[WARN] the loss is increasing
+[21] loss: 1889.864
+validation: 115599 / 160000 =  0.72249375
+[22] loss: 1889.868
+[WARN] the loss is increasing
+[23] loss: 1889.870
+[WARN] the loss is increasing
+[24] loss: 1889.860
+[25] loss: 1889.872
+[WARN] the loss is increasing
+[26] loss: 1889.868
+[27] loss: 1889.870
+[WARN] the loss is increasing
+[28] loss: 1889.870
+[WARN] the loss is increasing
+[29] loss: 1889.869
+[30] loss: 1889.867
+[31] loss: 1889.870
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[32] loss: 1889.862
+[33] loss: 1889.859
+[34] loss: 1889.869
+[WARN] the loss is increasing
+[35] loss: 1889.868
+[36] loss: 1889.869
+[WARN] the loss is increasing
+[37] loss: 1889.864
+[38] loss: 1889.865
+[WARN] the loss is increasing
+[39] loss: 1889.868
+[WARN] the loss is increasing
+[40] loss: 1889.869
+[WARN] the loss is increasing
+[41] loss: 1889.867
+validation: 115599 / 160000 =  0.72249375
+[42] loss: 1889.865
+[43] loss: 1889.863
+[44] loss: 1889.867
+[WARN] the loss is increasing
+[45] loss: 1889.874
+[WARN] the loss is increasing
+[46] loss: 1889.872
+[47] loss: 1889.873
+[WARN] the loss is increasing
+[48] loss: 1889.862
+[49] loss: 1889.869
+[WARN] the loss is increasing
+[50] loss: 1889.864
+[51] loss: 1889.869
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[52] loss: 1889.855
+[53] loss: 1889.872
+[WARN] the loss is increasing
+[54] loss: 1889.863
+[55] loss: 1889.868
+[WARN] the loss is increasing
+[56] loss: 1889.868
+[57] loss: 1889.869
+[WARN] the loss is increasing
+[58] loss: 1889.865
+[59] loss: 1889.866
+[WARN] the loss is increasing
+[60] loss: 1889.871
+[WARN] the loss is increasing
+[61] loss: 1889.860
+validation: 115599 / 160000 =  0.72249375
+[62] loss: 1889.867
+[WARN] the loss is increasing
+[63] loss: 1889.866
+[64] loss: 1889.872
+[WARN] the loss is increasing
+[65] loss: 1889.869
+[66] loss: 1889.871
+[WARN] the loss is increasing
+[67] loss: 1889.861
+[68] loss: 1889.870
+[WARN] the loss is increasing
+[69] loss: 1889.871
+[WARN] the loss is increasing
+[70] loss: 1889.868
+[71] loss: 1889.862
+validation: 115599 / 160000 =  0.72249375
+[72] loss: 1889.867
+[WARN] the loss is increasing
+[73] loss: 1889.865
+[74] loss: 1889.869
+[WARN] the loss is increasing
+[75] loss: 1889.872
+[WARN] the loss is increasing
+[76] loss: 1889.867
+[77] loss: 1889.864
+[78] loss: 1889.866
+[WARN] the loss is increasing
+[79] loss: 1889.870
+[WARN] the loss is increasing
+[80] loss: 1889.866
+[81] loss: 1889.863
+validation: 115599 / 160000 =  0.72249375
+[82] loss: 1889.873
+[WARN] the loss is increasing
+[83] loss: 1889.867
+[84] loss: 1889.872
+[WARN] the loss is increasing
+[85] loss: 1889.862
+[86] loss: 1889.868
+[WARN] the loss is increasing
+[87] loss: 1889.870
+[WARN] the loss is increasing
+[88] loss: 1889.865
+[89] loss: 1889.866
+[WARN] the loss is increasing
+[90] loss: 1889.871
+[WARN] the loss is increasing
+[91] loss: 1889.872
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[92] loss: 1889.865
+[93] loss: 1889.857
+[94] loss: 1889.871
+[WARN] the loss is increasing
+[95] loss: 1889.865
+[96] loss: 1889.872
+[WARN] the loss is increasing
+[97] loss: 1889.864
+[98] loss: 1889.870
+[WARN] the loss is increasing
+[99] loss: 1889.869
+[100] loss: 1889.859
+[101] loss: 1889.871
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[102] loss: 1889.865
+[103] loss: 1889.860
+[104] loss: 1889.876
+[WARN] the loss is increasing
+[105] loss: 1889.865
+[106] loss: 1889.870
+[WARN] the loss is increasing
+[107] loss: 1889.866
+[108] loss: 1889.862
+[109] loss: 1889.872
+[WARN] the loss is increasing
+[110] loss: 1889.869
+[111] loss: 1889.869
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[112] loss: 1889.857
+[113] loss: 1889.858
+[WARN] the loss is increasing
+[114] loss: 1889.873
+[WARN] the loss is increasing
+[115] loss: 1889.871
+[116] loss: 1889.872
+[WARN] the loss is increasing
+[117] loss: 1889.865
+[118] loss: 1889.868
+[WARN] the loss is increasing
+[119] loss: 1889.863
+[120] loss: 1889.866
+[WARN] the loss is increasing
+[121] loss: 1889.860
+validation: 115599 / 160000 =  0.72249375
+[122] loss: 1889.865
+[WARN] the loss is increasing
+[123] loss: 1889.871
+[WARN] the loss is increasing
+[124] loss: 1889.865
+[125] loss: 1889.866
+[WARN] the loss is increasing
+[126] loss: 1889.866
+[WARN] the loss is increasing
+[127] loss: 1889.865
+[128] loss: 1889.864
+[129] loss: 1889.874
+[WARN] the loss is increasing
+[130] loss: 1889.865
+[131] loss: 1889.867
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[132] loss: 1889.866
+[133] loss: 1889.868
+[WARN] the loss is increasing
+[134] loss: 1889.866
+[135] loss: 1889.871
+[WARN] the loss is increasing
+[136] loss: 1889.871
+[WARN] the loss is increasing
+[137] loss: 1889.869
+[138] loss: 1889.866
+[139] loss: 1889.867
+[WARN] the loss is increasing
+[140] loss: 1889.870
+[WARN] the loss is increasing
+[141] loss: 1889.864
+validation: 115599 / 160000 =  0.72249375
+[142] loss: 1889.872
+[WARN] the loss is increasing
+[143] loss: 1889.861
+[144] loss: 1889.869
+[WARN] the loss is increasing
+[145] loss: 1889.865
+[146] loss: 1889.866
+[WARN] the loss is increasing
+[147] loss: 1889.865
+[148] loss: 1889.869
+[WARN] the loss is increasing
+[149] loss: 1889.872
+[WARN] the loss is increasing
+[150] loss: 1889.871
+[151] loss: 1889.866
+validation: 115599 / 160000 =  0.72249375
+[152] loss: 1889.866
+[WARN] the loss is increasing
+[153] loss: 1889.871
+[WARN] the loss is increasing
+[154] loss: 1889.870
+[155] loss: 1889.863
+[156] loss: 1889.868
+[WARN] the loss is increasing
+[157] loss: 1889.865
+[158] loss: 1889.867
+[WARN] the loss is increasing
+[159] loss: 1889.870
+[WARN] the loss is increasing
+[160] loss: 1889.870
+[161] loss: 1889.858
+validation: 115599 / 160000 =  0.72249375
+[162] loss: 1889.868
+[WARN] the loss is increasing
+[163] loss: 1889.867
+[164] loss: 1889.861
+[165] loss: 1889.870
+[WARN] the loss is increasing
+[166] loss: 1889.865
+[167] loss: 1889.871
+[WARN] the loss is increasing
+[168] loss: 1889.866
+[169] loss: 1889.872
+[WARN] the loss is increasing
+[170] loss: 1889.858
+[171] loss: 1889.874
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[172] loss: 1889.866
+[173] loss: 1889.866
+[WARN] the loss is increasing
+[174] loss: 1889.869
+[WARN] the loss is increasing
+[175] loss: 1889.871
+[WARN] the loss is increasing
+[176] loss: 1889.865
+[177] loss: 1889.863
+[178] loss: 1889.863
+[179] loss: 1889.871
+[WARN] the loss is increasing
+[180] loss: 1889.865
+[181] loss: 1889.869
+[WARN] the loss is increasing
+validation: 115599 / 160000 =  0.72249375
+[182] loss: 1889.869
+[WARN] the loss is increasing
+[183] loss: 1889.868
+[184] loss: 1889.867
+[185] loss: 1889.870
+[WARN] the loss is increasing
+[186] loss: 1889.864
+[187] loss: 1889.867
+[WARN] the loss is increasing
+[188] loss: 1889.868
+[WARN] the loss is increasing
+[189] loss: 1889.868
+[WARN] the loss is increasing
+[190] loss: 1889.860
+[191] loss: 1889.853
+validation: 115599 / 160000 =  0.72249375
+[192] loss: 1889.875
+[WARN] the loss is increasing
+[193] loss: 1889.865
+[194] loss: 1889.868
+[WARN] the loss is increasing
+[195] loss: 1889.869
+[WARN] the loss is increasing
+[196] loss: 1889.864
+[197] loss: 1889.868
+[WARN] the loss is increasing
+[198] loss: 1889.870
+[WARN] the loss is increasing
+[199] loss: 1889.868
+[200] loss: 1889.869
+[WARN] the loss is increasing
+[201] loss: 1889.865
+validation: 115599 / 160000 =  0.72249375

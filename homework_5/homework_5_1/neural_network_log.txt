@@ -1,0 +1,172 @@
+/Users/shuyiheng/opt/anaconda3/bin/python3 "/Users/shuyiheng/Library/Application Support/JetBrains/Toolbox/apps/PyCharm-P/ch-0/202.7660.27/PyCharm.app/Contents/plugins/python/helpers/pydev/pydevd.py" --cmd-line --multiproc --qt-support=auto --client 127.0.0.1 --port 60902 --file /Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_1/main.py
+pydev debugger: process 70088 is connecting
+Connected to pydev debugger (build 202.7660.27)
+
+[INFO] The neural network training starts
+[1] loss: 1829.661
+validation: 115599 / 160000 = 0.72249375
+[2] loss: 1438.069
+[3] loss: 1134.240
+[4] loss: 869.110
+[5] loss: 677.028
+[6] loss: 541.817
+[7] loss: 444.608
+[8] loss: 375.319
+[9] loss: 325.857
+[10] loss: 289.024
+[11] loss: 260.418
+validation: 158734 / 160000 = 0.9920875
+[12] loss: 237.934
+[13] loss: 220.244
+[14] loss: 205.966
+[15] loss: 194.138
+[16] loss: 184.124
+[17] loss: 175.471
+[18] loss: 168.034
+[19] loss: 161.544
+[20] loss: 155.766
+[21] loss: 150.637
+validation: 159335 / 160000 = 0.99584375
+[22] loss: 146.013
+[23] loss: 141.867
+[24] loss: 138.140
+[25] loss: 134.633
+[26] loss: 131.537
+[27] loss: 128.587
+[28] loss: 125.875
+[29] loss: 123.294
+[30] loss: 120.918
+[31] loss: 118.641
+validation: 159492 / 160000 = 0.996825
+[32] loss: 116.508
+[33] loss: 114.484
+[34] loss: 112.541
+[35] loss: 110.747
+[36] loss: 109.096
+[37] loss: 107.504
+[38] loss: 105.955
+[39] loss: 104.414
+[40] loss: 103.092
+[41] loss: 101.853
+validation: 159523 / 160000 = 0.99701875
+[42] loss: 100.636
+[43] loss: 99.502
+[44] loss: 98.372
+[45] loss: 97.358
+[46] loss: 96.350
+[47] loss: 95.432
+[48] loss: 94.506
+[49] loss: 93.598
+[50] loss: 92.745
+[51] loss: 91.961
+validation: 159691 / 160000 = 0.99806875
+[52] loss: 91.162
+[53] loss: 90.417
+[54] loss: 89.663
+[55] loss: 88.973
+[56] loss: 88.267
+[57] loss: 87.562
+[58] loss: 86.932
+[59] loss: 86.305
+[60] loss: 85.699
+[61] loss: 85.097
+validation: 159599 / 160000 = 0.99749375
+[62] loss: 84.570
+[63] loss: 83.996
+[64] loss: 83.465
+[65] loss: 82.950
+[66] loss: 82.507
+[67] loss: 82.015
+[68] loss: 81.536
+[69] loss: 81.074
+[70] loss: 80.577
+[71] loss: 80.162
+validation: 159689 / 160000 = 0.99805625
+[72] loss: 79.732
+[73] loss: 79.340
+[74] loss: 78.928
+[75] loss: 78.567
+[76] loss: 78.169
+[77] loss: 77.752
+[78] loss: 77.440
+[79] loss: 77.068
+[80] loss: 76.753
+[81] loss: 76.423
+validation: 159711 / 160000 = 0.99819375
+[82] loss: 76.082
+[83] loss: 75.801
+[84] loss: 75.471
+[85] loss: 75.141
+[86] loss: 74.838
+[87] loss: 74.572
+[88] loss: 74.255
+[89] loss: 73.992
+[90] loss: 73.744
+[91] loss: 73.490
+validation: 159759 / 160000 = 0.99849375
+[92] loss: 73.197
+[93] loss: 72.990
+[94] loss: 72.674
+[95] loss: 72.511
+[96] loss: 72.250
+[97] loss: 72.052
+[98] loss: 71.772
+[99] loss: 71.562
+[100] loss: 71.345
+[101] loss: 71.136
+validation: 159750 / 160000 = 0.9984375
+[102] loss: 70.955
+[103] loss: 70.758
+[104] loss: 70.523
+[105] loss: 70.375
+[106] loss: 70.154
+[107] loss: 69.949
+[108] loss: 69.788
+[109] loss: 69.607
+[110] loss: 69.443
+[111] loss: 69.255
+validation: 159740 / 160000 = 0.998375
+[112] loss: 69.113
+[113] loss: 68.877
+[114] loss: 68.765
+[115] loss: 68.570
+[116] loss: 68.449
+[117] loss: 68.269
+[118] loss: 68.149
+[119] loss: 67.977
+[120] loss: 67.831
+[121] loss: 67.703
+validation: 159662 / 160000 = 0.9978875
+[122] loss: 67.561
+[123] loss: 67.432
+[124] loss: 67.275
+[125] loss: 67.159
+[126] loss: 67.003
+[127] loss: 66.847
+[128] loss: 66.757
+[129] loss: 66.601
+[130] loss: 66.519
+[131] loss: 66.390
+validation: 159769 / 160000 = 0.99855625
+[132] loss: 66.245
+[133] loss: 66.173
+[134] loss: 66.072
+[135] loss: 65.909
+[136] loss: 65.806
+[137] loss: 65.715
+[138] loss: 65.626
+[139] loss: 65.487
+[140] loss: 65.393
+[141] loss: 65.288
+validation: 159761 / 160000 = 0.99850625
+[142] loss: 65.188
+[143] loss: 65.084
+[144] loss: 64.958
+[145] loss: 64.883
+[146] loss: 64.770
+[147] loss: 64.610
+[148] loss: 64.602
+[149] loss: 64.490
+[150] loss: 64.350
+[151] loss: 64.303
+validation: 159819 / 160000 = 0.99886875
