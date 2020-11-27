@@ -2,6 +2,7 @@ import torch
 import torch.utils.data
 import torch.nn as nn
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 # x1 = np.arange(-5, 5, 0.1)
@@ -24,6 +25,8 @@ def sample_generate():
 
     sample_inputs = []
     sample_golden = []
+    sample_0 = []
+    sample_1 = []
     for i in x:
         for j in y:
             if radius_square(i, j) <= np.sqrt(2):
