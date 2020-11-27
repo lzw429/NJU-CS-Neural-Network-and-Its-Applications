@@ -8,7 +8,7 @@ import torch.optim as optim
 from homework_5_2.dataset import Dataset
 
 
-class Model(nn.Module):
+class FeedForwardNNModel(nn.Module):
     def __init__(self, act_h=nn.LeakyReLU(), act_o=nn.Sigmoid()):
         super().__init__()
         self.layer_in = nn.Linear(64, hidden_size)
@@ -26,6 +26,8 @@ class Model(nn.Module):
 def evaluate_model():
     global loss, batch_idx, sample_batched, inputs, golden, outputs
     loss = 0.0
+    positive_count = 0
+    sample_count = 0
     outputs_list = torch.tensor([], dtype=torch.float)
     with torch.no_grad():
         for batch_idx, sample_batched in enumerate(testing_dataloader):
@@ -33,7 +35,12 @@ def evaluate_model():
             outputs = model(inputs)
             outputs_list = torch.cat((outputs_list, outputs), 0)
             loss += criterion(outputs, golden)
+
+            sample_count += int(golden.shape[0])
+            positive_count += int(torch.sum(torch.eq(torch.argmax(outputs, 1), golden)))
     print('validation loss: ' + str(loss))
+    print('validation: ' + str(positive_count) + ' / ' + str(sample_count) + ' = ',
+          float(positive_count) / sample_count)
 
 
 if __name__ == '__main__':
@@ -60,7 +67,7 @@ if __name__ == '__main__':
         '/Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_2/optdigits_data/optdigits.tes',
         delimiter=','))
 
-    model = Model()
+    model = FeedForwardNNModel()
     optimizer = optim.AdamW(model.parameters(), lr)
     criterion = nn.CrossEntropyLoss()
 
