@@ -121,15 +121,29 @@ class MultiLayerPerceptron:
         pass
 
 
+def evaluate_model():
+    eval_loss = 0.0
+    outputs_list = np.array([])
+    for batch_idx in range(dataloader.get_num_batch()):  # for each batch
+        inputs, golden = dataloader.get_batch(batch_idx)  # inputs and golden outputs for this batch
+        y_pred = model.forward(inputs)  # predict
+        eval_loss += model.loss(y_pred, golden)  # get the loss
+        outputs_list = np.append(outputs_list, y_pred)
+    if args.plot:
+        ax = plt.axes(projection='3d')
+        ax.plot_trisurf(X[:, 0], X[:, 1], outputs_list, color='r')
+        plt.show()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_size", type=int, default=2)
     parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=100)
-    parser.add_argument("--num_hidden_layer", type=int, default=1)
-    parser.add_argument("--hidden_size", type=int, default=16)
+    parser.add_argument("--batch_size", type=int, default=25)
+    parser.add_argument("--num_hidden_layer", type=int, default=3)
+    parser.add_argument("--hidden_size", type=int, default=100)
     parser.add_argument("--num_epoch", type=int, default=500000)
-    parser.add_argument("--lr", type=float, default=0.00005)
+    parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=False)
     parser.add_argument("--plot", type=bool, default=True)
     parser.add_argument("--dir", type=str)
@@ -162,18 +176,13 @@ if __name__ == '__main__':
             model.backward(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
-        print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss), file=log_file)
+        # print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)  # print to file
         log_file.flush()
-        print("[INFO] epoch " + str(epoch_idx) + ": " + str(running_loss))
+        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))  # print to console
         if running_loss > last_loss != 0.0:
             print("[WARN] the loss is increasing")
         last_loss = running_loss
-
-    # validation
-    # loss = 0.0
-    # outputs = np.array()
-    # for batch_idx in range(dataloader.get_num_batch()):
-    #     inputs, golden = dataloader.get_batch(batch_idx)
-    #     y_pred = model.forward(inputs)
-    #     loss += model.loss(y_pred, golden)
-    # stack the prediction
+        if running_loss < 0.001:
+            break
+        if epoch_idx % 50 == 0:
+            evaluate_model()
