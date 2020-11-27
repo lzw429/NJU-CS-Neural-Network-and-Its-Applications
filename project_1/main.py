@@ -176,7 +176,7 @@ if __name__ == '__main__':
             model.backward(golden)  # back propagation
             model.update_parameters()  # update the parameters
 
-        # print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)  # print to file
+        print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss), file=log_file)  # print to file
         log_file.flush()
         print('[%d] loss: %.3f' % (epoch_idx + 1, running_loss))  # print to console
         if running_loss > last_loss != 0.0:
