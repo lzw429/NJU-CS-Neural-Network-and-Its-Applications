@@ -19,18 +19,19 @@ class Model(nn.Module):
             self.layer_h.append(nn.Linear(n_h, n_h))
         self.layer_out = nn.Linear(n_h, 1)
 
-    def forward(self, x, act_hidden=nn.LeakyReLU(), act_out=nn.LeakyReLU()):
+    def forward(self, x, act_hidden=nn.LeakyReLU(), act_out=None):
         A = act_hidden(self.layer_in(x))
         for l in range(n_l):
             A = act_hidden(self.layer_h[l](A))
-        A = act_out(self.layer_out(A))
-        return A
+        if act_out is None:
+            return self.layer_out(A)
+        else:
+            return self.act_out(self.layer_out(A))
 
 
 class Dataset(torch.utils.data.Dataset):
 
     def __init__(self, X, Y):
-        X = normalization(X)
         self.inputs = torch.tensor(X, dtype=torch.float)
         self.golden = torch.tensor(Y, dtype=torch.float)
 
@@ -41,17 +42,33 @@ class Dataset(torch.utils.data.Dataset):
         return len(self.inputs)
 
 
+def evaluate_model():
+    global batch_idx, sample_batched, inputs, golden, outputs
+    outputs_list = torch.tensor([], dtype=torch.float)
+    with torch.no_grad():
+        for batch_idx, sample_batched in enumerate(dataloader):
+            inputs, golden = sample_batched
+            outputs = model(inputs)
+            outputs_list = torch.cat((outputs_list, outputs), 0)
+    if args.plot:
+        ax = plt.axes(projection='3d')
+        ax.plot_trisurf(torch.tensor(X[:, 0], dtype=torch.float),
+                        torch.tensor(X[:, 1], dtype=torch.float),
+                        torch.squeeze(outputs_list), color='r')
+        plt.show()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input_size", type=int, default=2)
-    parser.add_argument("--output_size", type=int, default=1)
-    parser.add_argument("--batch_size", type=int, default=50)
-    parser.add_argument("--num_hidden_layer", type=int, default=4)
-    parser.add_argument("--hidden_size", type=int, default=300)
+    parser.add_argument("--batch_size", type=int, default=25)
+    parser.add_argument("--num_hidden_layer", type=int, default=3)
+    parser.add_argument("--hidden_size", type=int, default=100)
     parser.add_argument("--num_epoch", type=int, default=500000)
-    parser.add_argument("--lr", type=float, default=0.001)
+    parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--shuffle", type=bool, default=True)
     parser.add_argument("--plot", type=bool, default=True)
+    parser.add_argument("--input_size", type=int, default=2)
+    parser.add_argument("--output_size", type=int, default=1)
     parser.add_argument("--dir", type=str)
     parser.add_argument("--optimizer", type=str, default="adamw")  # 'sgd', 'adam', 'adamw'
     args = parser.parse_args()
@@ -106,15 +123,11 @@ if __name__ == '__main__':
         last_loss = running_loss
         if running_loss < 0.001:
             break
+        if epoch_idx % 50 == 0:
+            evaluate_model()
 
     print('[INFO] Finished Training')
     torch.save(model.state_dict(), args.dir + "model.pt")
 
     # validation
-    # with torch.no_grad():
-    #     for batch_idx, sample_batched in enumerate(dataloader):
-    #         inputs, golden = sample_batched
-    #         outputs = model(inputs)
-    # outputs_list = torch.cat((outputs_list, outputs), 0)
-    # plt.plot(x, outputs_list, color='y')
-    # plt.show()
+    evaluate_model()

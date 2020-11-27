@@ -28,7 +28,7 @@ def sample_generate():
 
 
 class MultiLayerPerceptron:
-    def __init__(self, optim: Optimizer = SGD(0.00005), hidden_act_func=LeakyReLU(), output_act_func=Linear(0.1),
+    def __init__(self, optim: Optimizer = SGD(0.00005), hidden_act_func=LeakyReLU(), output_act_func=Linear(1),
                  loss_func=MSELoss()):
         # functions
         self.h_act = hidden_act_func.activate
