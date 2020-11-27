@@ -1,0 +1,567 @@
+/Users/shuyiheng/opt/anaconda3/bin/python3 "/Users/shuyiheng/Library/Application Support/JetBrains/Toolbox/apps/PyCharm-P/ch-0/202.7660.27/PyCharm.app/Contents/plugins/python/helpers/pydev/pydevd.py" --cmd-line --multiproc --qt-support=auto --client 127.0.0.1 --port 63270 --file /Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_2/main.py
+pydev debugger: process 89940 is connecting
+Connected to pydev debugger (build 202.7660.27)
+[1] loss: 263.327
+[WARN] the loss is increasing
+validation loss: tensor(119.1462)
+validation: 1052 / 1797 =  0.5854201446855871
+[2] loss: 236.386
+[3] loss: 216.012
+[4] loss: 204.647
+[5] loss: 197.993
+[6] loss: 194.023
+[7] loss: 191.386
+[8] loss: 189.476
+[9] loss: 188.005
+[10] loss: 186.804
+[11] loss: 185.847
+validation loss: tensor(89.5024)
+validation: 1657 / 1797 =  0.9220923761825265
+[12] loss: 185.048
+[13] loss: 184.384
+[14] loss: 183.828
+[15] loss: 183.352
+[16] loss: 182.935
+[17] loss: 182.568
+[18] loss: 182.230
+[19] loss: 181.920
+[20] loss: 181.646
+[21] loss: 181.399
+validation loss: tensor(87.6337)
+validation: 1685 / 1797 =  0.9376739009460211
+[22] loss: 181.175
+[23] loss: 180.969
+[24] loss: 180.778
+[25] loss: 180.599
+[26] loss: 180.430
+[27] loss: 180.273
+[28] loss: 180.125
+[29] loss: 179.985
+[30] loss: 179.853
+[31] loss: 179.728
+validation loss: tensor(86.9264)
+validation: 1694 / 1797 =  0.9426822481914302
+[32] loss: 179.608
+[33] loss: 179.494
+[34] loss: 179.384
+[35] loss: 179.280
+[36] loss: 179.180
+[37] loss: 179.084
+[38] loss: 178.991
+[39] loss: 178.903
+[40] loss: 178.817
+[41] loss: 178.734
+validation loss: tensor(86.5295)
+validation: 1704 / 1797 =  0.9482470784641068
+[42] loss: 178.653
+[43] loss: 178.573
+[44] loss: 178.498
+[45] loss: 178.425
+[46] loss: 178.356
+[47] loss: 178.289
+[48] loss: 178.224
+[49] loss: 178.162
+[50] loss: 178.100
+[51] loss: 178.039
+validation loss: tensor(86.2747)
+validation: 1709 / 1797 =  0.9510294936004452
+[52] loss: 177.982
+[53] loss: 177.926
+[54] loss: 177.873
+[55] loss: 177.821
+[56] loss: 177.771
+[57] loss: 177.723
+[58] loss: 177.675
+[59] loss: 177.630
+[60] loss: 177.585
+[61] loss: 177.543
+validation loss: tensor(86.0882)
+validation: 1718 / 1797 =  0.9560378408458542
+[62] loss: 177.501
+[63] loss: 177.460
+[64] loss: 177.420
+[65] loss: 177.382
+[66] loss: 177.344
+[67] loss: 177.306
+[68] loss: 177.269
+[69] loss: 177.234
+[70] loss: 177.198
+[71] loss: 177.164
+validation loss: tensor(85.9417)
+validation: 1720 / 1797 =  0.9571508069003896
+[72] loss: 177.130
+[73] loss: 177.096
+[74] loss: 177.063
+[75] loss: 177.031
+[76] loss: 177.000
+[77] loss: 176.970
+[78] loss: 176.941
+[79] loss: 176.912
+[80] loss: 176.884
+[81] loss: 176.857
+validation loss: tensor(85.8370)
+validation: 1723 / 1797 =  0.9588202559821926
+[82] loss: 176.831
+[83] loss: 176.805
+[84] loss: 176.780
+[85] loss: 176.755
+[86] loss: 176.731
+[87] loss: 176.707
+[88] loss: 176.683
+[89] loss: 176.659
+[90] loss: 176.635
+[91] loss: 176.611
+validation loss: tensor(85.7598)
+validation: 1727 / 1797 =  0.9610461880912632
+[92] loss: 176.588
+[93] loss: 176.565
+[94] loss: 176.544
+[95] loss: 176.523
+[96] loss: 176.504
+[97] loss: 176.484
+[98] loss: 176.466
+[99] loss: 176.448
+[100] loss: 176.431
+[101] loss: 176.414
+validation loss: tensor(85.6974)
+validation: 1730 / 1797 =  0.9627156371730662
+[102] loss: 176.397
+[103] loss: 176.381
+[104] loss: 176.365
+[105] loss: 176.350
+[106] loss: 176.334
+[107] loss: 176.319
+[108] loss: 176.304
+[109] loss: 176.289
+[110] loss: 176.274
+[111] loss: 176.259
+validation loss: tensor(85.6364)
+validation: 1733 / 1797 =  0.9643850862548692
+[112] loss: 176.245
+[113] loss: 176.231
+[114] loss: 176.218
+[115] loss: 176.206
+[116] loss: 176.193
+[117] loss: 176.181
+[118] loss: 176.170
+[119] loss: 176.159
+[120] loss: 176.148
+[121] loss: 176.138
+validation loss: tensor(85.5900)
+validation: 1732 / 1797 =  0.9638286032276016
+[122] loss: 176.127
+[123] loss: 176.117
+[124] loss: 176.108
+[125] loss: 176.098
+[126] loss: 176.088
+[127] loss: 176.079
+[128] loss: 176.069
+[129] loss: 176.061
+[130] loss: 176.052
+[131] loss: 176.043
+validation loss: tensor(85.5602)
+validation: 1733 / 1797 =  0.9643850862548692
+[132] loss: 176.035
+[133] loss: 176.027
+[134] loss: 176.018
+[135] loss: 176.010
+[136] loss: 176.002
+[137] loss: 175.995
+[138] loss: 175.988
+[139] loss: 175.980
+[140] loss: 175.973
+[141] loss: 175.967
+validation loss: tensor(85.5421)
+validation: 1733 / 1797 =  0.9643850862548692
+[142] loss: 175.960
+[143] loss: 175.954
+[144] loss: 175.947
+[145] loss: 175.941
+[146] loss: 175.934
+[147] loss: 175.927
+[148] loss: 175.919
+[149] loss: 175.912
+[150] loss: 175.905
+[151] loss: 175.898
+validation loss: tensor(85.5419)
+validation: 1731 / 1797 =  0.9632721202003339
+[152] loss: 175.891
+[153] loss: 175.885
+[154] loss: 175.879
+[155] loss: 175.873
+[156] loss: 175.868
+[157] loss: 175.862
+[158] loss: 175.857
+[159] loss: 175.851
+[160] loss: 175.847
+[161] loss: 175.841
+validation loss: tensor(85.5453)
+validation: 1734 / 1797 =  0.9649415692821369
+[162] loss: 175.836
+[163] loss: 175.832
+[164] loss: 175.827
+[165] loss: 175.823
+[166] loss: 175.819
+[167] loss: 175.814
+[168] loss: 175.810
+[169] loss: 175.806
+[170] loss: 175.802
+[171] loss: 175.798
+validation loss: tensor(85.5326)
+validation: 1735 / 1797 =  0.9654980523094046
+[172] loss: 175.794
+[173] loss: 175.791
+[174] loss: 175.787
+[175] loss: 175.784
+[176] loss: 175.780
+[177] loss: 175.777
+[178] loss: 175.773
+[179] loss: 175.770
+[180] loss: 175.767
+[181] loss: 175.764
+validation loss: tensor(85.5223)
+validation: 1734 / 1797 =  0.9649415692821369
+[182] loss: 175.760
+[183] loss: 175.757
+[184] loss: 175.754
+[185] loss: 175.751
+[186] loss: 175.747
+[187] loss: 175.743
+[188] loss: 175.741
+[189] loss: 175.740
+[190] loss: 175.724
+[191] loss: 175.712
+validation loss: tensor(85.5103)
+validation: 1732 / 1797 =  0.9638286032276016
+[192] loss: 175.707
+[193] loss: 175.703
+[194] loss: 175.700
+[195] loss: 175.696
+[196] loss: 175.694
+[197] loss: 175.690
+[198] loss: 175.687
+[199] loss: 175.685
+[200] loss: 175.682
+[201] loss: 175.679
+validation loss: tensor(85.5008)
+validation: 1735 / 1797 =  0.9654980523094046
+[202] loss: 175.676
+[203] loss: 175.674
+[204] loss: 175.671
+[205] loss: 175.668
+[206] loss: 175.666
+[207] loss: 175.662
+[208] loss: 175.660
+[209] loss: 175.657
+[210] loss: 175.655
+[211] loss: 175.652
+validation loss: tensor(85.4886)
+validation: 1736 / 1797 =  0.9660545353366722
+[212] loss: 175.650
+[213] loss: 175.648
+[214] loss: 175.646
+[215] loss: 175.644
+[216] loss: 175.642
+[217] loss: 175.640
+[218] loss: 175.639
+[219] loss: 175.637
+[220] loss: 175.635
+[221] loss: 175.633
+validation loss: tensor(85.4799)
+validation: 1736 / 1797 =  0.9660545353366722
+[222] loss: 175.632
+[223] loss: 175.630
+[224] loss: 175.629
+[225] loss: 175.628
+[226] loss: 175.626
+[227] loss: 175.625
+[228] loss: 175.623
+[229] loss: 175.622
+[230] loss: 175.620
+[231] loss: 175.619
+validation loss: tensor(85.4714)
+validation: 1737 / 1797 =  0.9666110183639399
+[232] loss: 175.618
+[233] loss: 175.617
+[234] loss: 175.616
+[235] loss: 175.615
+[236] loss: 175.614
+[237] loss: 175.613
+[238] loss: 175.613
+[239] loss: 175.611
+[240] loss: 175.610
+[241] loss: 175.608
+validation loss: tensor(85.4503)
+validation: 1739 / 1797 =  0.9677239844184753
+[242] loss: 175.601
+[243] loss: 175.585
+[244] loss: 175.580
+[245] loss: 175.579
+[246] loss: 175.578
+[247] loss: 175.576
+[248] loss: 175.575
+[249] loss: 175.574
+[250] loss: 175.573
+[251] loss: 175.572
+validation loss: tensor(85.4491)
+validation: 1739 / 1797 =  0.9677239844184753
+[252] loss: 175.571
+[253] loss: 175.571
+[254] loss: 175.570
+[255] loss: 175.569
+[256] loss: 175.569
+[257] loss: 175.568
+[258] loss: 175.568
+[259] loss: 175.567
+[260] loss: 175.567
+[261] loss: 175.566
+validation loss: tensor(85.4298)
+validation: 1739 / 1797 =  0.9677239844184753
+[262] loss: 175.565
+[263] loss: 175.564
+[264] loss: 175.562
+[265] loss: 175.562
+[266] loss: 175.561
+[267] loss: 175.560
+[268] loss: 175.560
+[269] loss: 175.560
+[270] loss: 175.559
+[271] loss: 175.559
+validation loss: tensor(85.4251)
+validation: 1741 / 1797 =  0.9688369504730105
+[272] loss: 175.558
+[273] loss: 175.558
+[274] loss: 175.557
+[275] loss: 175.556
+[276] loss: 175.555
+[277] loss: 175.554
+[278] loss: 175.553
+[279] loss: 175.553
+[280] loss: 175.552
+[281] loss: 175.552
+validation loss: tensor(85.4154)
+validation: 1740 / 1797 =  0.9682804674457429
+[282] loss: 175.552
+[283] loss: 175.552
+[284] loss: 175.552
+[WARN] the loss is increasing
+[285] loss: 175.549
+[286] loss: 175.547
+[287] loss: 175.547
+[288] loss: 175.547
+[289] loss: 175.547
+[290] loss: 175.546
+[291] loss: 175.546
+validation loss: tensor(85.4072)
+validation: 1741 / 1797 =  0.9688369504730105
+[292] loss: 175.546
+[293] loss: 175.546
+[294] loss: 175.545
+[295] loss: 175.545
+[296] loss: 175.545
+[297] loss: 175.546
+[WARN] the loss is increasing
+[298] loss: 175.537
+[299] loss: 175.520
+[300] loss: 175.519
+[301] loss: 175.519
+validation loss: tensor(85.4346)
+validation: 1742 / 1797 =  0.9693934335002783
+[302] loss: 175.519
+[303] loss: 175.518
+[304] loss: 175.518
+[305] loss: 175.518
+[306] loss: 175.518
+[307] loss: 175.518
+[308] loss: 175.518
+[309] loss: 175.517
+[310] loss: 175.517
+[311] loss: 175.517
+validation loss: tensor(85.4202)
+validation: 1743 / 1797 =  0.9699499165275459
+[312] loss: 175.517
+[313] loss: 175.517
+[314] loss: 175.517
+[315] loss: 175.517
+[316] loss: 175.517
+[317] loss: 175.517
+[318] loss: 175.516
+[319] loss: 175.516
+[WARN] the loss is increasing
+[320] loss: 175.516
+[321] loss: 175.519
+[WARN] the loss is increasing
+validation loss: tensor(85.4743)
+validation: 1741 / 1797 =  0.9688369504730105
+[322] loss: 175.514
+[323] loss: 175.512
+[324] loss: 175.512
+[325] loss: 175.513
+[WARN] the loss is increasing
+[326] loss: 175.512
+[327] loss: 175.509
+[328] loss: 175.509
+[329] loss: 175.508
+[330] loss: 175.508
+[331] loss: 175.508
+validation loss: tensor(85.4365)
+validation: 1740 / 1797 =  0.9682804674457429
+[332] loss: 175.508
+[333] loss: 175.508
+[334] loss: 175.507
+[335] loss: 175.507
+[336] loss: 175.507
+[337] loss: 175.507
+[338] loss: 175.507
+[339] loss: 175.506
+[340] loss: 175.504
+[341] loss: 175.503
+validation loss: tensor(85.4095)
+validation: 1738 / 1797 =  0.9671675013912076
+[342] loss: 175.503
+[343] loss: 175.503
+[344] loss: 175.503
+[345] loss: 175.503
+[346] loss: 175.503
+[347] loss: 175.503
+[348] loss: 175.502
+[349] loss: 175.502
+[350] loss: 175.502
+[351] loss: 175.502
+validation loss: tensor(85.4190)
+validation: 1741 / 1797 =  0.9688369504730105
+[352] loss: 175.502
+[353] loss: 175.502
+[354] loss: 175.502
+[355] loss: 175.502
+[356] loss: 175.502
+[357] loss: 175.502
+[358] loss: 175.502
+[359] loss: 175.502
+[360] loss: 175.502
+[361] loss: 175.502
+validation loss: tensor(85.4149)
+validation: 1741 / 1797 =  0.9688369504730105
+[362] loss: 175.502
+[363] loss: 175.502
+[364] loss: 175.502
+[365] loss: 175.502
+[366] loss: 175.502
+[367] loss: 175.502
+[368] loss: 175.502
+[369] loss: 175.502
+[370] loss: 175.502
+[371] loss: 175.502
+validation loss: tensor(85.4052)
+validation: 1742 / 1797 =  0.9693934335002783
+[372] loss: 175.502
+[373] loss: 175.502
+[374] loss: 175.502
+[375] loss: 175.501
+[376] loss: 175.501
+[377] loss: 175.501
+[378] loss: 175.501
+[379] loss: 175.501
+[380] loss: 175.501
+[381] loss: 175.501
+validation loss: tensor(85.3963)
+validation: 1742 / 1797 =  0.9693934335002783
+[382] loss: 175.501
+[WARN] the loss is increasing
+[383] loss: 175.501
+[384] loss: 175.497
+[385] loss: 175.497
+[386] loss: 175.497
+[387] loss: 175.497
+[388] loss: 175.497
+[389] loss: 175.497
+[390] loss: 175.497
+[391] loss: 175.497
+validation loss: tensor(85.3772)
+validation: 1743 / 1797 =  0.9699499165275459
+[392] loss: 175.497
+[393] loss: 175.497
+[394] loss: 175.497
+[395] loss: 175.497
+[396] loss: 175.497
+[397] loss: 175.497
+[WARN] the loss is increasing
+[398] loss: 175.499
+[WARN] the loss is increasing
+[399] loss: 175.494
+[400] loss: 175.493
+[401] loss: 175.493
+validation loss: tensor(85.3788)
+validation: 1743 / 1797 =  0.9699499165275459
+[402] loss: 175.493
+[403] loss: 175.493
+[404] loss: 175.493
+[405] loss: 175.493
+[406] loss: 175.493
+[407] loss: 175.493
+[408] loss: 175.493
+[409] loss: 175.493
+[410] loss: 175.493
+[411] loss: 175.493
+validation loss: tensor(85.3850)
+validation: 1745 / 1797 =  0.9710628825820813
+[412] loss: 175.493
+[413] loss: 175.493
+[414] loss: 175.493
+[415] loss: 175.493
+[416] loss: 175.493
+[417] loss: 175.493
+[418] loss: 175.493
+[419] loss: 175.493
+[420] loss: 175.493
+[421] loss: 175.493
+validation loss: tensor(85.3876)
+validation: 1745 / 1797 =  0.9710628825820813
+[422] loss: 175.492
+[423] loss: 175.492
+[424] loss: 175.492
+[425] loss: 175.492
+[426] loss: 175.492
+[427] loss: 175.492
+[428] loss: 175.492
+[429] loss: 175.492
+[430] loss: 175.492
+[431] loss: 175.492
+validation loss: tensor(85.3872)
+validation: 1745 / 1797 =  0.9710628825820813
+[432] loss: 175.492
+[433] loss: 175.492
+[434] loss: 175.492
+[435] loss: 175.492
+[436] loss: 175.492
+[437] loss: 175.492
+[438] loss: 175.492
+[439] loss: 175.492
+[440] loss: 175.492
+[441] loss: 175.492
+validation loss: tensor(85.3858)
+validation: 1744 / 1797 =  0.9705063995548135
+[442] loss: 175.492
+[443] loss: 175.492
+[444] loss: 175.492
+[445] loss: 175.492
+[446] loss: 175.492
+[447] loss: 175.492
+[448] loss: 175.492
+[449] loss: 175.492
+[450] loss: 175.492
+[451] loss: 175.492
+validation loss: tensor(85.3818)
+validation: 1746 / 1797 =  0.9716193656093489
+[452] loss: 175.492
+[453] loss: 175.492
+[454] loss: 175.492
+[455] loss: 175.492
+[456] loss: 175.492
+[457] loss: 175.492
+[458] loss: 175.492
+[459] loss: 175.492
+[460] loss: 175.492
+[461] loss: 175.492
+validation loss: tensor(85.3769)
+validation: 1745 / 1797 =  0.9710628825820813
