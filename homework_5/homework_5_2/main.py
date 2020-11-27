@@ -23,12 +23,25 @@ class Model(nn.Module):
         return self.act_o(self.layer_out(a))
 
 
+def evaluate_model():
+    global loss, batch_idx, sample_batched, inputs, golden, outputs
+    loss = 0.0
+    outputs_list = torch.tensor([], dtype=torch.float)
+    with torch.no_grad():
+        for batch_idx, sample_batched in enumerate(testing_dataloader):
+            inputs, golden = sample_batched
+            outputs = model(inputs)
+            outputs_list = torch.cat((outputs_list, outputs), 0)
+            loss += criterion(outputs, golden)
+    print('validation loss: ' + str(loss))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--hidden_size', type=int, default=100)
     parser.add_argument('--num_epoch', type=int, default=10000)
     parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--lr', type=float, default=0.0001)
+    parser.add_argument('--lr', type=float, default=0.00005)
     parser.add_argument('--dir', type=str,
                         default='/Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_2')
     parser.add_argument('--do_train', type=bool, default=True)
@@ -74,17 +87,10 @@ if __name__ == '__main__':
             last_loss = running_loss
             if running_loss < 0.0001:
                 break
+            if epoch_idx % 10 == 0:
+                evaluate_model()
 
         print('[INFO] Finished Training')
 
     if args.do_valid:
-        loss = 0.0
-        outputs_list = torch.tensor([], dtype=torch.float)
-        with torch.no_grad():
-            for batch_idx, sample_batched in enumerate(testing_dataloader):
-                inputs, golden = sample_batched
-                outputs = model(inputs)
-                outputs_list = torch.cat((outputs_list, outputs), 0)
-                loss += criterion(outputs, golden)
-        print('validation loss: ' + str(loss))
-        print(outputs_list)
+        evaluate_model()
