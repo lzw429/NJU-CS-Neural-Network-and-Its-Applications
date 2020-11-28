@@ -1,6 +1,8 @@
 import argparse
 
+import numpy as np
 import torch
+import torch.utils.data
 from torch import optim, nn
 
 from homework_5_3.dataset import sample_generate, Dataset
@@ -67,3 +69,7 @@ if __name__ == '__main__':
 
     for l in range(num_layer):
         print('hidden layer ' + str(l) + ' output: ' + str(model.a_h[l]))
+
+    x = np.arange(0, 1, 0.01)
+    for l in range(num_layer):
+        print('layer ' + str(l) + ': ' + model.predict(x, l))

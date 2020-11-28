@@ -1,9 +1,10 @@
 import numpy as np
 import torch
+import torch.utils.data
 
 
 def sample_generate():
-    x = np.arange(0, 1, 0.01) #
+    x = np.arange(0, 1, 0.01)
     inputs = []
     golden = []
     for i in x:

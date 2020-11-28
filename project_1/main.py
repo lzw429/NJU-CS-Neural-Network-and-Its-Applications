@@ -117,9 +117,6 @@ class MultiLayerPerceptron:
         self.optim['w_in'].update_parameters(self.w_in, self.dw_in)
         self.optim['b_in'].update_parameters(self.b_in, self.db_in)
 
-    def predict(self):
-        pass
-
 
 def evaluate_model():
     eval_loss = 0.0

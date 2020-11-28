@@ -21,8 +21,22 @@ class Model(nn.Module):
 
     def forward(self, x):
         a = self.act_h(self.layer_in(x))
+        self.a_in = a
         for l in range(self.n_l):
             a = self.act_h(self.layer_h[l](a))
             self.a_h[l] = a
         self.a_out = self.act_o(self.layer_out(a))
         return self.a_out
+
+    def predict(self, x, layer):
+        """
+        Get the output of the specified layer
+        :param x: the input tensors
+        :param layer: 0 is the input layer, n_l + 1 is the output layer, [1...n_l] are the hidden layers
+        :return: the output of the specified layer of the network
+        """
+        if layer == 0:
+            return self.a_in
+        if layer > self.n_l:
+            return self.a_out
+        return self.a_h[layer]
