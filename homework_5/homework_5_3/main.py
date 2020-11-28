@@ -35,6 +35,9 @@ if __name__ == '__main__':
 
     if not args.do_train:
         model.load_state_dict(torch.load(args.dir + '/model.pt'))
+        model.a_in = torch.load(args.dir + "/a_in.pt")
+        model.a_h = torch.load(args.dir + "/a_h.pt")
+        model.a_out = torch.load(args.dir + "/a_out.pt")
     else:
         last_loss = 0.0
         for epoch_idx in range(num_epoch):
@@ -58,6 +61,9 @@ if __name__ == '__main__':
 
         print('[INFO] Finished Training')
         torch.save(model.state_dict(), args.dir + '/model.pt')
+        torch.save(model.a_in, args.dir + "/a_in.pt")
+        torch.save(model.a_h, args.dir + "/a_h.pt")
+        torch.save(model.a_out, args.dir + "/a_out.pt")
 
     print('input layer weight: ' + str(model.layer_in.weight))
     print('input layer bias: ' + str(model.layer_in.bias))
@@ -70,6 +76,8 @@ if __name__ == '__main__':
     for l in range(num_layer):
         print('hidden layer ' + str(l) + ' output: ' + str(model.a_h[l]))
 
-    x = np.arange(0, 1, 0.01)
-    for l in range(num_layer):
-        print('layer ' + str(l) + ': ' + model.predict(x, l))
+    with torch.no_grad():
+        x = np.arange(0, 1, 0.01)
+        for l in range(num_layer):
+            for i in x:
+                print('layer ' + str(l) + ': ' + model.predict(torch.tensor(i, dtype=torch.float), l))
