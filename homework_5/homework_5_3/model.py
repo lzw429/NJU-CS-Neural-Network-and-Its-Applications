@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class Model(nn.Module):
-    def __init__(self, hidden_size=50, act_h=nn.LeakyReLU(), act_o=nn.Tanh(), n_l=5):
+    def __init__(self, hidden_size=5, act_h=nn.LeakyReLU(), act_o=nn.Tanh(), n_l=1):
         super().__init__()
         self.n_l = n_l
         self.hidden_size = hidden_size

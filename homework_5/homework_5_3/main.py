@@ -10,11 +10,11 @@ from homework_5_3.model import Model
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hidden_size', type=int, default=50)
-    parser.add_argument('--num_epoch', type=int, default=10000)
-    parser.add_argument('--batch_size', type=int, default=1)
+    parser.add_argument('--hidden_size', type=int, default=5)
+    parser.add_argument('--num_epoch', type=int, default=50000)
+    parser.add_argument('--batch_size', type=int, default=10)
     parser.add_argument('--lr', type=float, default=0.0001)
-    parser.add_argument('--num_layer', type=int, default=5)
+    parser.add_argument('--num_layer', type=int, default=0)
     parser.add_argument('--dir', type=str,
                         default='/Users/shuyiheng/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_3')
     parser.add_argument('--do_train', type=bool, default=False)
@@ -35,9 +35,6 @@ if __name__ == '__main__':
 
     if not args.do_train:
         model.load_state_dict(torch.load(args.dir + '/model.pt'))
-        model.a_in = torch.load(args.dir + "/a_in.pt")
-        model.a_h = torch.load(args.dir + "/a_h.pt")
-        model.a_out = torch.load(args.dir + "/a_out.pt")
     else:
         last_loss = 0.0
         for epoch_idx in range(num_epoch):
@@ -46,6 +43,7 @@ if __name__ == '__main__':
                 inputs, golden = sample_batched
 
                 optimizer.zero_grad()
+                inputs = inputs.unsqueeze(1)
                 outputs = model(inputs)
                 loss = criterion(outputs, golden)
                 loss.backward()
@@ -56,14 +54,11 @@ if __name__ == '__main__':
             if running_loss > last_loss:
                 print('[WARN] the loss is increasing')
             last_loss = running_loss
-            if running_loss < 0.0001:
+            if running_loss < 0.0005:
                 break
 
         print('[INFO] Finished Training')
         torch.save(model.state_dict(), args.dir + '/model.pt')
-        torch.save(model.a_in, args.dir + "/a_in.pt")
-        torch.save(model.a_h, args.dir + "/a_h.pt")
-        torch.save(model.a_out, args.dir + "/a_out.pt")
 
     print('input layer weight: ' + str(model.layer_in.weight))
     print('input layer bias: ' + str(model.layer_in.bias))
@@ -75,9 +70,3 @@ if __name__ == '__main__':
 
     for l in range(num_layer):
         print('hidden layer ' + str(l) + ' output: ' + str(model.a_h[l]))
-
-    with torch.no_grad():
-        x = np.arange(0, 1, 0.01)
-        for l in range(num_layer):
-            for i in x:
-                print('layer ' + str(l) + ': ' + model.predict(torch.tensor(i, dtype=torch.float), l))
