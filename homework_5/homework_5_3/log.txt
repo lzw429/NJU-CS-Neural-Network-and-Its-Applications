@@ -1,12 +1,5 @@
-C:\Users\Dell\anaconda3\python.exe C:\Users\Dell\AppData\Local\JetBrains\Toolbox\apps\PyCharm-P\ch-0\202.8194.15\plugins\python\helpers\pydev\pydevd.py --cmd-line --multiproc --qt-support=auto --client 127.0.0.1 --port 60673 --file C:/Users/Dell/Documents/GitHub/NJU-CS-Neural-Network-and-Its-Applications/homework_5/homework_5_3/main.py --do_train=True --dir=C:\Users\Dell\Documents\GitHub\NJU-CS-Neural-Network-and-Its-Applications\homework_5\homework_5_3
-pydev debugger: process 21724 is connecting
-Connected to pydev debugger (build 202.8194.15)
-C:\Users\Dell\anaconda3\lib\site-packages\torch\nn\modules\loss.py:431: UserWarning: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([1, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
-  return F.mse_loss(input, target, reduction=self.reduction)
+
 [1] loss: 98.648
-[WARN] the loss is increasing
-C:\Users\Dell\anaconda3\lib\site-packages\torch\nn\modules\loss.py:431: UserWarning: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([1, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
-  return F.mse_loss(input, target, reduction=self.reduction)
 [2] loss: 90.146
 [3] loss: 82.392
 [4] loss: 75.176
