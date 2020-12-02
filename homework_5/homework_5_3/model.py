@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class Model(nn.Module):
-    def __init__(self, hidden_size=5, act_h=nn.LeakyReLU(), act_o=nn.Tanh(), n_l=1):
+    def __init__(self, hidden_size=5, act_h=nn.Sigmoid(), act_o=nn.ReLU(), n_l=0):
         super().__init__()
         self.n_l = n_l
         self.hidden_size = hidden_size
@@ -25,7 +25,7 @@ class Model(nn.Module):
         for l in range(self.n_l):
             a = self.act_h(self.layer_h[l](a))
             self.a_h[l] = a
-        self.a_out = self.act_o(self.layer_out(a))
+        self.a_out = self.layer_out(a)
         return self.a_out
 
     def predict(self, x, layer):

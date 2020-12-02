@@ -4,15 +4,23 @@ import numpy as np
 import torch
 import torch.utils.data
 from torch import optim, nn
+import matplotlib.pyplot as plt
 
 from homework_5_3.dataset import sample_generate, Dataset
 from homework_5_3.model import Model
 
+
+def plot_prediction():
+    with torch.no_grad():
+        plt.plot(X, model(torch.tensor(X, dtype=torch.float).unsqueeze(1)), 'r')
+        plt.show()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--hidden_size', type=int, default=5)
-    parser.add_argument('--num_epoch', type=int, default=50000)
-    parser.add_argument('--batch_size', type=int, default=10)
+    parser.add_argument('--num_epoch', type=int, default=20000)
+    parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--num_layer', type=int, default=0)
     parser.add_argument('--dir', type=str,
@@ -26,6 +34,8 @@ if __name__ == '__main__':
     num_layer = args.num_layer
 
     X, Y = sample_generate()
+    plt.plot(X, Y)
+    plt.show()
     dataset = Dataset(X, Y)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
@@ -56,6 +66,8 @@ if __name__ == '__main__':
             last_loss = running_loss
             if running_loss < 0.0005:
                 break
+            if epoch_idx % 100 == 0:
+                plot_prediction()
 
         print('[INFO] Finished Training')
         torch.save(model.state_dict(), args.dir + '/model.pt')
@@ -68,5 +80,4 @@ if __name__ == '__main__':
     print('output layer weight: ' + str(model.layer_out.weight))
     print('output layer bias: ' + str(model.layer_out.bias))
 
-    for l in range(num_layer):
-        print('hidden layer ' + str(l) + ' output: ' + str(model.a_h[l]))
+    plot_prediction()

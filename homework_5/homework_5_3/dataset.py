@@ -4,7 +4,7 @@ import torch.utils.data
 
 
 def sample_generate():
-    x = np.arange(0, 6.3, 0.01)
+    x = np.arange(0, 3, 0.03)
     inputs = []
     golden = []
     for i in x:
