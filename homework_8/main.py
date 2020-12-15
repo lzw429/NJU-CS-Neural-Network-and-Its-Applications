@@ -11,11 +11,12 @@ def simulated_annealing(T_max, T_min, L, max_stay_counter):
     best_x, best_y = sa.run()
     print("best_x: " + str(best_x) + " , best_y: " + str(best_y))
 
-    y_plot = plt.plot(pd.DataFrame(sa.best_y_history).cummin(axis=0), color='red')
-    plt.legend(handles=[y_plot], labels=['y'])
+    y_plot, = plt.plot(pd.DataFrame(sa.best_y_history).cummin(axis=0), color='red')
+    plt.legend(handles=[y_plot], labels=['y'], loc='best')
     plt.show()
 
-    x_plot = plt.plot(pd.DataFrame(sa.best_x_history).cummin())
+    x1_plot, x2_plot = plt.plot(pd.DataFrame(sa.best_x_history).cummin())
+    plt.legend(handles=[x1_plot, x2_plot], labels=['x1', 'x2'], loc='best')
     plt.show()
 
 
