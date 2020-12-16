@@ -37,4 +37,8 @@ if __name__ == '__main__':
     simulated_annealing(1, 1e-9, 300, 150, 'SABoltzmann')
     simulated_annealing(100, 1e-7, 300, 150, 'SABoltzmann')
     simulated_annealing(1, 1e-9, 300, 200, 'SABoltzmann')
+    simulated_annealing(1, 1e-9, 300, 100, 'SABoltzmann')
+    simulated_annealing(1, 1e-9, 400, 150, 'SABoltzmann')
+    simulated_annealing(1, 1e-9, 200, 150, 'SABoltzmann')
+
 

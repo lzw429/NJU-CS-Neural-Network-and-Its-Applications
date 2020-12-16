@@ -112,3 +112,5 @@ T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 200
 
 ### 第三组实验
 
+本组实验关注于 `SA` 与 `SABoltzmann` 两种模型的选择。
+
