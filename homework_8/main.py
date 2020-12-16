@@ -1,13 +1,17 @@
 import numpy as np
-from sko.SA import SA
+from sko.SA import SA, SABoltzmann
 import matplotlib.pyplot as plt
 import pandas as pd
 
 obj_func = lambda x: 0.2 + x[0] ** 2 + x[1] ** 2 - 0.1 * np.cos(6 * np.pi * x[0]) - 0.1 * np.cos(6 * np.pi * x[1])
 
 
-def simulated_annealing(T_max, T_min, L, max_stay_counter):
-    sa = SA(func=obj_func, x0=[0.8, -0.5], T_max=T_max, T_min=T_min, L=L, max_stay_counter=max_stay_counter)
+def simulated_annealing(T_max, T_min, L, max_stay_counter, model):
+    if model == "SA":
+        sa = SA(func=obj_func, x0=[0.8, -0.5], T_max=T_max, T_min=T_min, L=L, max_stay_counter=max_stay_counter)
+    elif model == "SABoltzmann":
+        sa = SABoltzmann(func=obj_func, x0=[0.8, -0.5], T_max=T_max, T_min=T_min, L=L,
+                         max_stay_counter=max_stay_counter)
     best_x, best_y = sa.run()
     print("best_x: " + str(best_x) + " , best_y: " + str(best_y))
 
@@ -21,4 +25,16 @@ def simulated_annealing(T_max, T_min, L, max_stay_counter):
 
 
 if __name__ == '__main__':
-    simulated_annealing(1, 1e-9, 300, 150)
+    # simulated_annealing(100, 1e-7, 300, 150, 'SA')
+    # simulated_annealing(1, 1e-7, 300, 150, 'SA')
+    # simulated_annealing(1, 1e-9, 300, 150, 'SA')
+    #
+    # simulated_annealing(1, 1e-9, 200, 150, 'SA')
+    # simulated_annealing(1, 1e-9, 100, 150, 'SA')
+    # simulated_annealing(1, 1e-9, 300, 100, 'SA')
+    # simulated_annealing(1, 1e-9, 300, 200, 'SA')
+
+    simulated_annealing(1, 1e-9, 300, 150, 'SABoltzmann')
+    simulated_annealing(100, 1e-7, 300, 150, 'SABoltzmann')
+    simulated_annealing(1, 1e-9, 300, 200, 'SABoltzmann')
+
