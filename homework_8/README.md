@@ -4,7 +4,11 @@
 
 yhshu@smail.nju.edu.cn
 
-![img.png](img/img.png)
+[TOC]
+
+## 优化问题
+
+<img src="img/question.png" alt="img.png" style="zoom:67%;" />
 
 ## 参数设置
 
@@ -12,6 +16,8 @@ yhshu@smail.nju.edu.cn
 - T_min：最小温度
 - L：链长
 - max_stay_counter：冷却耗时
+
+
 
 ## 模型设置
 
@@ -42,10 +48,13 @@ yhshu@smail.nju.edu.cn
     T_new = T0 / log(1 + k)
 ```
 
+其中学习率取 0.5.
+
+
+
 ## 实验效果
 
 以下实验中，当 x1、x2 没有明显变化时，y 仍然有明显变化。这是因为此时 x 的变化相对于整张图而言较为微小。
-
 
 ### 第一组实验
 
@@ -53,27 +62,29 @@ yhshu@smail.nju.edu.cn
 
 **实验 #1 设置与结果**
 
-T_max = 100, T_min = 1e-7, L = 300, max_stay_counter = 150
+模型 SA，T_max = 100, T_min = 1e-7, L = 300, max_stay_counter = 150
 
-![img.png](img.png)
-![img_1.png](img_1.png)
+<img src="img.png" alt="img.png" style="zoom: 40%;" />
+<img src="img_1.png" alt="img_1.png" style="zoom:40%;" />
 
 **实验 #2 设置与结果**
 
-T_max = 1, T_min = 1e-7, L = 300, max_stay_counter = 150
+模型 SA，T_max = 1, T_min = 1e-7, L = 300, max_stay_counter = 150
 
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
+<img src="img_2.png" alt="img_2.png" style="zoom:40%;" />
+<img src="img_3.png" alt="img_3.png" style="zoom:40%;" />
 
 **实验 #3 设置与结果**
 
-T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 150
+模型 SA，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 150
 
-![img_4.png](img_4.png)
-![img_5.png](img_5.png)
+<img src="img_4.png" alt="img_4.png" style="zoom:40%;" />
+<img src="img_5.png" alt="img_5.png" style="zoom:40%;" />
 
 
 由第一组实验，`T_max = 1, T_min = 1e-9` 导致了较快的收敛，是相对合适的参数，后续实验中将使用这组参数。
+
+
 
 ### 第二组实验
 
@@ -81,36 +92,88 @@ T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 150
 
 **实验 #4 设置与结果**
 
-T_max = 1, T_min = 1e-9, L = 200, max_stay_counter = 150
+模型 SA，T_max = 1, T_min = 1e-9, L = 200, max_stay_counter = 150
 
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
+<img src="img_6.png" alt="img_6.png" style="zoom:40%;" />
+<img src="img_7.png" alt="img_7.png" style="zoom:40%;" />
+
 
 **实验 #5 设置与结果**
 
-T_max = 1, T_min = 1e-9, L = 100, max_stay_counter = 150
+模型 SA，T_max = 1, T_min = 1e-9, L = 100, max_stay_counter = 150
 
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
+<img src="img_10.png" alt="img_10.png" style="zoom:40%;" />
+<img src="img_11.png" alt="img_11.png" style="zoom:40%;" />
+
 
 **实验 #6 设置与结果**
 
-T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 100
+模型 SA，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 100
 
-![img_12.png](img_12.png)
-![img_13.png](img_13.png)
+<img src="img_12.png" alt="img_12.png" style="zoom:40%;" />
+<img src="img_13.png" alt="img_13.png" style="zoom:40%;" />
+
 
 **实验 #7 设置与结果**
 
-T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 200
+模型 SA，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 200
 
-![img_14.png](img_14.png)
-![img_15.png](img_15.png)
+<img src="img_14.png" alt="img_14.png" style="zoom:40%;" />
+<img src="img_15.png" alt="img_15.png" style="zoom:40%;" />
 
 
 由第二组实验，与实验 #3 相比，`L = 300, max_stay_counter = 150` 导致了较快的收敛，是相对合适的参数，后续实验将使用这组参数。
+
+
 
 ### 第三组实验
 
 本组实验关注于 `SA` 与 `SABoltzmann` 两种模型的选择。
 
+**实验 #8 设置与结果**
+
+模型 SABoltzmann，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 150
+
+<img src="img_16.png" alt="img_16.png" style="zoom:40%;" />
+<img src="img_17.png" alt="img_17.png" style="zoom:40%;" />
+
+**实验 #9 设置与结果**
+
+模型 SABoltzmann，T_max = 100, T_min = 1e-7, L = 300, max_stay_counter = 150
+
+<img src="img_18.png" alt="img_18.png" style="zoom:40%;" />
+<img src="img_19.png" alt="img_19.png" style="zoom:40%;" />
+
+
+**实验 #10 设置与结果**
+
+模型 SABoltzmann，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 200
+
+<img src="img_20.png" alt="img_20.png" style="zoom:40%;" />
+<img src="img_21.png" alt="img_21.png" style="zoom:40%;" />
+
+
+**实验 #11 设置与结果**
+
+模型 SABoltzmann，T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 100
+
+<img src="img_22.png" alt="img_22.png" style="zoom:40%;" />
+<img src="img_23.png" alt="img_23.png" style="zoom:40%;" />
+
+**实验 #12 设置与结果**
+
+模型 SABoltzmann，T_max = 1, T_min = 1e-9, L = 400, max_stay_counter = 150
+
+<img src="img_24.png" alt="img_24.png" style="zoom:40%;" />
+<img src="img_25.png" alt="img_25.png" style="zoom:40%;" />
+
+**实验 #13 设置与结果**
+
+模型 SABoltzmann，T_max = 1, T_min = 1e-9, L = 200, max_stay_counter = 150
+
+<img src="img_26.png" alt="img_26.png" style="zoom:40%;" />
+<img src="img_27.png" alt="img_27.png" style="zoom:40%;" />
+
+
+
+由第三组实验与之前实验对比可知，SABoltzmann 模型显著优于 SA 模型。本实验中，`T_max = 1, T_min = 1e-9, L = 300, max_stay_counter = 150` 这一组参数相比其他参数可快速收敛。
